@@ -11,7 +11,7 @@ public class CoinThrow : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
 
-        gameObject.GetComponent<Rigidbody>().AddForce(x, x+y, 0, ForceMode.Impulse);
+        gameObject.GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, (x+y) * Time.deltaTime, 0, ForceMode.Impulse);
         Destroy(gameObject, 5);
     }
 }
