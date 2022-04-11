@@ -7,7 +7,7 @@ public class CoinThrowPosition : MonoBehaviour
     public GameObject coin;
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             //Slowmotion
             if (Input.GetKeyDown(KeyCode.E))

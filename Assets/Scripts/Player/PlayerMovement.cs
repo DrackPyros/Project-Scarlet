@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private bool maxSpeed = false;
+    private int speedUnit = 0;
+    private int runDelay = 37;
+    private int brakeDelay = 25;
+    private int runSpeed = 500;
+    private int walkSpeed = 250;
     public float axis;
+
     void Update(){
         axis = Input.GetAxis("Horizontal");
     }
     void FixedUpdate()
     {
-        if (!Input.GetKey(KeyCode.Space))
-        {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {           
             //Movement
             if (Input.GetAxisRaw("Horizontal") != 0){
-                if (!maxSpeed){
-                    accelerate();
-                }
+                accelerate();
             } else 
                 decelerate();
             
@@ -25,16 +30,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     void accelerate(){
-        int i = 0;
-        if (i <= 4){
-            gameObject.GetComponent<Rigidbody>().AddForce(Input.GetAxis("Horizontal") * Time.deltaTime, 0, 0, ForceMode.Impulse);
-            i++;
+        if (speedUnit <= runDelay){
+            walk();
+            speedUnit++;
         }
         else
-            maxSpeed = true;
+            run();
     }
     void decelerate(){
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        maxSpeed = false;
+        if (speedUnit == 38) speedUnit = brakeDelay;
+        if (speedUnit > 0){
+            speedUnit--;
+        }
+        else
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+    void walk(){
+        gameObject.GetComponent<Rigidbody>().AddForce(Input.GetAxis("Horizontal") * walkSpeed * Time.deltaTime, 0, 0, ForceMode.Impulse);
+    }
+    void run(){
+        gameObject.GetComponent<Rigidbody>().AddForce(Input.GetAxis("Horizontal") * runSpeed * Time.deltaTime, 0, 0, ForceMode.Impulse);
     }
 }
