@@ -19,7 +19,7 @@ public class CoinThrowPosition : MonoBehaviour
                     Instantiate(coin, transform.position + new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0), Quaternion.identity);
             }
         }
-        if (Input.GetKeyUp(KeyCode.Space)){
+        if (Input.GetKeyUp(KeyCode.LeftShift)){
             //Stop slowmotion
         }
     }
