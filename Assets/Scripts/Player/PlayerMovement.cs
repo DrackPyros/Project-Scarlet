@@ -7,14 +7,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private int speedUnitFrames = 0;
     private int runDelayFrames = 30;
-    private int jumpFrames = 40;
-    private int jumpFallFrames = 10;
-    private int brakeDelay = 25;
+    private int fallMultiplayer = 3;
+    private int brakeDelay = 20;
     private int runSpeed = 550;
     private int walkSpeed = 400;
-    public int jumpForce = 1000;
+    private int jumpForce = 400;
     private float axis;
     private bool canjump = true;
+    public int wallJumpDirection = 0;
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -25,13 +25,17 @@ public class PlayerMovement : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift))
         {           
             //Movement
-            if (Input.GetAxisRaw("Horizontal") != 0){
-                accelerate();
-            } else 
-                decelerate();
+            if (Input.GetAxisRaw("Horizontal") != 0) accelerate();
+            else if (wallJumpDirection == 0) decelerate();
             
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && canjump) jump();
+            else if (canjump == false && rb.velocity.y < 0) rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
+
+            //Wall Jump
+            
+            if (Input.GetKeyDown(KeyCode.Space) && wallJumpDirection != 0 && !canjump){ walljump(); print(wallJumpDirection);}
+            else if (canjump == false && rb.velocity.y < 0) rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
         }
     }
     void accelerate(){
@@ -59,24 +63,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void jump(){
         canjump = false;
-        int i = 0;
-        while (i < jumpFrames){
-            rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse); //ascent
-            i++;
-            if (i == (jumpFrames - jumpFallFrames)){ //peak
-                Vector3 eraseY = rb.velocity;
-                eraseY.y = 0;
-                rb.velocity = eraseY;
-                print(i);
-            } else if (i > (jumpFrames - jumpFallFrames)){ //fall
-                rb.AddForce(Vector3.down * (jumpForce * 3) * Time.deltaTime, ForceMode.Impulse);
-            }
-        }
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+    void walljump(){
+        rb.AddForce(walkSpeed * wallJumpDirection, jumpForce, 0, ForceMode.Impulse);
     }
     void OnTriggerEnter(Collider other){
-        
-        if (other.CompareTag("Floor") || other.CompareTag("Coin"))
-        {
+        if (other.CompareTag("Floor") || other.CompareTag("Coin")){
             canjump = true;
         }
     }
