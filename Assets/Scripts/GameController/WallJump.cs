@@ -9,7 +9,7 @@ public class WallJump : MonoBehaviour
     private int direction = 0;
     void Update()
     {
-        player.GetComponent<PlayerMovement>().wallJumpDirection = direction;
+        // player.GetComponent<PlayerMovement>().wallJumpDirection = direction;
     }
 
     void OnTriggerEnter(Collider other){

@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private int walkSpeed = 400;
     private int jumpForce = 400;
     private float axis;
-    private bool canjump = true;
-    public int wallJumpDirection = 0;
+    public bool canjump = true;
+    public bool canwalljump = false;
+    public float direction = 0;
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -24,18 +25,20 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate(){
         if (!Input.GetKey(KeyCode.LeftShift))
         {           
+            //Rotation Bug
+            // if (Input.GetAxisRaw("Horizontal") == 0) direction = 0;
+
             //Movement
-            if (Input.GetAxisRaw("Horizontal") != 0) accelerate();
-            else if (wallJumpDirection == 0) decelerate();
+            if (Input.GetAxisRaw("Horizontal") != 0) {accelerate(); rotate();}
+            else if (!canwalljump) decelerate();
             
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && canjump) jump();
-            else if (canjump == false && rb.velocity.y < 0) rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
+            else if (canjump == false && rb.velocity.y < 0) fall();
 
             //Wall Jump
-            
-            if (Input.GetKeyDown(KeyCode.Space) && wallJumpDirection != 0 && !canjump){ walljump(); print(wallJumpDirection);}
-            else if (canjump == false && rb.velocity.y < 0) rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
+            if (Input.GetKeyDown(KeyCode.Space) && canwalljump && !canjump){walljump();}
+            else if (!canjump && rb.velocity.y < 0) fall();
         }
     }
     void accelerate(){
@@ -65,12 +68,30 @@ public class PlayerMovement : MonoBehaviour
         canjump = false;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
+    void fall(){
+        rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
+    }
     void walljump(){
-        rb.AddForce(walkSpeed * wallJumpDirection, jumpForce, 0, ForceMode.Impulse);
+        rb.AddForce(walkSpeed * -direction, jumpForce, 0, ForceMode.Impulse);
+        canwalljump = false;
+        rotate();
+    }
+    void rotate(){
+        if (direction != Input.GetAxisRaw("Horizontal")){
+            if (direction != 0)
+                transform.Rotate(180, 0, 0, Space.Self);
+            direction = Input.GetAxisRaw("Horizontal");
+        }
     }
     void OnTriggerEnter(Collider other){
         if (other.CompareTag("Floor") || other.CompareTag("Coin")){
             canjump = true;
+            canwalljump = false;
         }
+        if (other.CompareTag("Wall")){
+            if (transform.position.y > 1){
+                canwalljump = true;
+            }
+        }  
     }
 }
