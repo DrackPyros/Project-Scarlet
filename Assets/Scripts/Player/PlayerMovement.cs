@@ -12,25 +12,24 @@ public class PlayerMovement : MonoBehaviour
     private int runSpeed = 550;
     private int walkSpeed = 400;
     private int jumpForce = 400;
-    private float axis;
     public bool canjump = true;
     public bool canwalljump = false;
+    public bool onwalljump = false;
     public float direction = 0;
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update(){
-        axis = Input.GetAxis("Horizontal");
-    }
-    void FixedUpdate(){
         if (!Input.GetKey(KeyCode.LeftShift))
         {           
             //Rotation Bug
             // if (Input.GetAxisRaw("Horizontal") == 0) direction = 0;
 
             //Movement
-            if (Input.GetAxisRaw("Horizontal") != 0) {accelerate(); rotate();}
-            else if (!canwalljump) decelerate();
+            if (transform.position.y == 1){
+                if (Input.GetAxisRaw("Horizontal") != 0) {accelerate(); rotate();}
+                else if (transform.position.y > 1) decelerate();
+            }
             
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && canjump) jump();
@@ -73,20 +72,28 @@ public class PlayerMovement : MonoBehaviour
     }
     void walljump(){
         rb.AddForce(walkSpeed * -direction, jumpForce, 0, ForceMode.Impulse);
+        //Bug salto vertical
         canwalljump = false;
+        onwalljump = true;
         rotate();
     }
     void rotate(){
         if (direction != Input.GetAxisRaw("Horizontal")){
-            if (direction != 0)
+            if (direction != 0){
                 transform.Rotate(180, 0, 0, Space.Self);
-            direction = Input.GetAxisRaw("Horizontal");
+                direction = -direction;
+            }
+            else
+                direction = Input.GetAxisRaw("Horizontal");
         }
+        else if (onwalljump)
+            direction = -direction;
     }
     void OnTriggerEnter(Collider other){
         if (other.CompareTag("Floor") || other.CompareTag("Coin")){
             canjump = true;
             canwalljump = false;
+            onwalljump = false;
         }
         if (other.CompareTag("Wall")){
             if (transform.position.y > 1){
