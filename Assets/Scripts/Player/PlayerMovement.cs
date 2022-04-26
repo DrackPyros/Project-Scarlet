@@ -22,9 +22,6 @@ public class PlayerMovement : MonoBehaviour
     void Update(){
         if (!Input.GetKey(KeyCode.LeftShift))
         {           
-            //Rotation Bug
-            // if (Input.GetAxisRaw("Horizontal") == 0) direction = 0;
-
             //Movement
             if (transform.position.y == 1){
                 if (Input.GetAxisRaw("Horizontal") != 0) {accelerate(); rotate();}
@@ -70,9 +67,8 @@ public class PlayerMovement : MonoBehaviour
     void fall(){
         rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
     }
-    void walljump(){
+    void walljump(){ //Bug salto vertical -> hacer collides mas pequeños
         rb.AddForce(walkSpeed * -direction, jumpForce, 0, ForceMode.Impulse);
-        //Bug salto vertical
         canwalljump = false;
         onwalljump = true;
         rotate();

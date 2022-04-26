@@ -10,8 +10,5 @@ public class SlowMotion : MonoBehaviour
         {
             //Slowmotion
         }
-        if (Input.GetKeyUp(KeyCode.Space)){
-            //Stop slowmotion
-        }
     }
 }

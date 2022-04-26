@@ -10,9 +10,7 @@ public class CoinAnimation : MonoBehaviour
     {
         a = GetComponent<Animator>();
     }
-    void OnTriggerEnter(Collider other){
-        // print(other.tag);
-        
+    void OnTriggerEnter(Collider other){        
         if (other.CompareTag("Floor") || other.CompareTag("Coin"))
         {
             a.SetBool("OnGround", true);
