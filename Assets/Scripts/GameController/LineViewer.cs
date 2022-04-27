@@ -4,29 +4,56 @@ using UnityEngine;
 
 public class LineViewer : MonoBehaviour
 {
-    private GameObject[] metal;
+    private GameObject[] metal = new GameObject[]{};
     public GameObject player;
-    public Material glow;
+    private GameObject id = null;
+    public Material cyan;
+    
     void Update(){
+        if (Input.GetKeyDown(KeyCode.LeftShift)){
+            if (metal.Length > 0){
+                viewer();
+                getClosest();
+            }
+        }
         if (Input.GetKey(KeyCode.LeftShift)){
             viewer();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift)){
-            // get();
-            getClosest();
+            foreach (GameObject m in metal){
+                Destroy(m.GetComponent<Outline>());
+                Destroy(m.GetComponent<LineRenderer>());
+            }
         }
     }
-    void viewer(){ // Inicializar a != null
-        if (metal != GameObject.FindGameObjectsWithTag("Coin")){ //No va
+    void viewer(){
+        if (metal.Length < GameObject.FindGameObjectsWithTag("Coin").Length){
             metal = GameObject.FindGameObjectsWithTag("Coin");
-            print(metal.Length);
+            if (metal.Length == 1)
+                getClosest();
+
+        }
+        if (metal.Length > 0){
+            foreach (GameObject m in metal){
+                LineRenderer line;
+                if(m.GetComponent<LineRenderer>()){
+                    line = m.GetComponent<LineRenderer>();
+                }
+                else{
+                    line = m.AddComponent<LineRenderer>();
+                }  
+                line.SetPosition(0, player.transform.position);
+                line.SetPosition(1, m.transform.position);
+                line.startWidth = 0.01f;
+                line.endWidth = 0.01f;
+                line.material = cyan;
+            }
         }
     }
     void get(){
         print(metal[0].transform.position);
     }
     void getClosest(){
-        GameObject id = null;
         float auxDistance = 100f;
         foreach (GameObject aux in metal){
             if (Vector3.Distance(player.transform.position, aux.transform.position)< auxDistance){
@@ -34,7 +61,18 @@ public class LineViewer : MonoBehaviour
                 auxDistance = Vector3.Distance(player.transform.position, aux.transform.position);
             }
         }
-        print(id.transform.position);
-        id.GetComponent<Renderer>().materials[1] = glow;
+        var outline = id.AddComponent<Outline>();
+        // print(id.transform.position);
+        outline.OutlineMode = Outline.Mode.OutlineVisible;
+        outline.OutlineColor = Color.cyan;
+        outline.OutlineWidth = 10f;
+
+        try {
+            var line = id.GetComponent<LineRenderer>();
+            line.startWidth = 0.2f;
+            line.endWidth = 0.2f;
+        }
+        catch (MissingComponentException){ }
+            
     }
 }
