@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift))
         {           
             //Movement
-            if (transform.position.y == 1){
+            if (canjump){
                 if (Input.GetAxisRaw("Horizontal") != 0) {accelerate(); rotate();}
                 else if (transform.position.y > 1) decelerate();
             }
@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canwalljump && !canjump){walljump();}
             else if (!canjump && rb.velocity.y < 0) fall();
         }
+        ongroud();
+        onwall();
     }
     void accelerate(){
         // move(runSpeed);
@@ -83,18 +85,26 @@ public class PlayerMovement : MonoBehaviour
                 direction = Input.GetAxisRaw("Horizontal");
         }
         else if (onwalljump)
-            direction = -direction;
+            direction = -direction; 
     }
-    void OnTriggerEnter(Collider other){
-        if (other.CompareTag("Floor") || other.CompareTag("Coin")){
+    void ongroud(){
+        if (Physics.Raycast(transform.position, Vector3.down, 0.5f)){
+            // Debug.DrawRay(transform.position, Vector3.down * 0.5f, Color.yellow);
             canjump = true;
-            canwalljump = false;
             onwalljump = false;
         }
-        if (other.CompareTag("Wall")){
-            if (transform.position.y > 1){
-                canwalljump = true;
-            }
-        }  
+        else
+            canjump = false;
+    }
+    void onwall(){
+        if (Physics.Raycast(transform.position, transform.right * direction, 0.5f) && !canjump){
+            canwalljump = true;
+        }
+        else
+            canwalljump = false;
+    }
+    void OnTriggerEnter(Collider other){
+        // if (other.CompareTag("Floor") || other.CompareTag("Coin")){}
+        // if (other.CompareTag("Wall")){ }// bug tiempo de caida al suelo
     }
 }
