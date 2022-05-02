@@ -5,8 +5,17 @@ using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
-    public InputAction controls;
+    public InputManager controls;
+    private GameObject player, GameController;
     void Awake(){
-        controls.
+        player = GameObject.Find("Player");
+        GameController = GameObject.Find("GameController");
+        controls.InputMaster.Jump.performed += _ => player.GetComponent<PlayerMovement>().jump();
+        controls.InputMaster.Move.performed += ctx => move(ctx.ReadValue<int>());
+    }
+    void move(int value){
+        print(value);
+        // player.GetComponent<PlayerMovement>().accelerate();
+        // player.GetComponent<PlayerMovement>().rotate();
     }
 }

@@ -29,17 +29,17 @@ public class PlayerMovement : MonoBehaviour
             }
             
             //Jump
-            if (Input.GetKeyDown(KeyCode.Space) && canjump) jump();
-            else if (canjump == false && rb.velocity.y < 0) fall();
+            // if (Input.GetKeyDown(KeyCode.Space) && canjump) jump();
+            if (canjump == false && rb.velocity.y < 0) fall();
 
             //Wall Jump
-            if (Input.GetKeyDown(KeyCode.Space) && canwalljump && !canjump){walljump();}
-            else if (!canjump && rb.velocity.y < 0) fall();
+            // if (Input.GetKeyDown(KeyCode.Space) && canwalljump && !canjump){walljump();}
+            // else if (!canjump && rb.velocity.y < 0) fall();
         }
         ongroud();
         onwall();
     }
-    void accelerate(){
+    public void accelerate(){
         // move(runSpeed);
         if (speedUnitFrames <= runDelayFrames){
             move(walkSpeed);
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         else
             move(runSpeed);
     }
-    void decelerate(){
+    public void decelerate(){
         if (speedUnitFrames == (runDelayFrames + 1)) speedUnitFrames = brakeDelay;
         if (speedUnitFrames > 0){
             speedUnitFrames--;
@@ -62,9 +62,12 @@ public class PlayerMovement : MonoBehaviour
     void move(int speed){
         rb.AddForce(Vector3.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime, ForceMode.Impulse);
     }
-    void jump(){
-        canjump = false;
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    public void jump(){
+        if (canjump){
+            canjump = false;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+        else if (canwalljump) walljump();
     }
     void fall(){
         rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
