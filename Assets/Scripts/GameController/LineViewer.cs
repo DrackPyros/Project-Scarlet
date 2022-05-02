@@ -21,7 +21,8 @@ public class LineViewer : MonoBehaviour
             viewer();
             if (metal.Length > 0){
                 sort();
-                if (Input.GetAxisRaw("Horizontal") != 0){
+                // if (Input.GetAxisRaw("Horizontal") != 0){ 
+                if (Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.A))){ //Obtener solo una pulsación
                     coinChanger();
                 }
             }
@@ -86,8 +87,9 @@ public class LineViewer : MonoBehaviour
         }
         else
             id--; // -x
-        if(id < 0) id = metal.Length;
-        if(id > metal.Length) id = 0;
+        if(id < 0) id = metal.Length-1;
+        if(id >= metal.Length) id = 0;
+        // print(id);
         select(metal[id]);
     }
     void sort(){

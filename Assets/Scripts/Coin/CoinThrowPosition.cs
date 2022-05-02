@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinThrowPosition : MonoBehaviour
 {
     public GameObject coin;
-    void Update()
+    void coinPosition()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
