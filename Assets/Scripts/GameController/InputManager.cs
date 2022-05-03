@@ -42,7 +42,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""id"": ""51b29fda-9dc5-4d66-9996-68b6b2597453"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -51,7 +51,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""id"": ""b330b50b-4e7f-4821-8132-6cd3a7352aa7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -60,7 +60,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""id"": ""efa05657-2063-4519-9d38-9c2109676f5c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -69,7 +69,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""id"": ""3a07c52a-ef11-42e4-ad9e-cfeb3489ed90"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -78,26 +78,26 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""id"": ""3c61e705-555e-46a2-9b78-2e370b7b8e5d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""ec2bfb56-757a-4a98-a620-83af35d0ad94"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Selector"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""a68dcb26-cb3f-4fa6-899f-325b7fa98974"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -245,9 +245,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""f0d9f00f-6443-4a74-a12f-a587f58b333a"",
-                    ""path"": ""1DAxis"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""8a9bb7b5-767b-4348-914a-b0cade4b0498"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -256,8 +256,30 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""f609c1f8-8971-4af7-9209-ffb31767300b"",
+                    ""name"": ""up"",
+                    ""id"": ""670add62-26b9-4043-87d1-f1a1532a5f8b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a69a656b-5512-45bb-9d26-70fb49e0a095"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1fd781e6-fc2e-40b7-a88a-151ade2eada8"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -267,8 +289,8 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""a31d34fe-f537-478a-9b55-5beaa80c8750"",
+                    ""name"": ""right"",
+                    ""id"": ""917a2d4f-72c3-4c98-956d-548ec63fd6a2"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",

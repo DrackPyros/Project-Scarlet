@@ -5,22 +5,13 @@ using UnityEngine;
 public class CoinThrowPosition : MonoBehaviour
 {
     public GameObject coin;
-    void coinPosition()
+    public void coinPosition(float horizontal, float vertical)
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            //Slowmotion
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0){
-                    Instantiate(coin, transform.position + Vector3.right, Quaternion.identity);
-                }
-                else
-                    Instantiate(coin, transform.position + new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0), Quaternion.identity);
-            }
+        if (horizontal == 0 && vertical == 0){
+            Instantiate(coin, transform.position + Vector3.right, Quaternion.identity);
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)){
-            //Stop slowmotion
-        }
+        else
+            Instantiate(coin, transform.position + new Vector3(horizontal, vertical, 0), Quaternion.identity);
+
     }
 }

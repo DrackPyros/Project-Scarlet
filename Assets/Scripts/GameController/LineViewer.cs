@@ -8,36 +8,18 @@ public class LineViewer : MonoBehaviour
     public GameObject player;
     private GameObject selected = null;
     public Material cyan;
+    private bool watch = false;
     
     void Update(){
-        if (Input.GetKeyDown(KeyCode.LeftShift)){
+        if (watch)
             viewer();
-            if (metal.Length > 0){
-                sort();
-                select(metal[0]);
-            }
-        }
-        if (Input.GetKey(KeyCode.LeftShift)){
-            viewer();
-            if (metal.Length > 0){
-                sort();
-                // if (Input.GetAxisRaw("Horizontal") != 0){ 
-                if (Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.A))){ //Obtener solo una pulsación
-                    coinChanger();
-                }
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift)){
-            foreach (GameObject m in metal){
-                deSelect(m);
-            }
-        }
     }
-    void viewer(){
+    public void setWatch(bool value){
+        watch = value;
+    }
+    public void viewer(){
         if (metal.Length < GameObject.FindGameObjectsWithTag("Coin").Length){
             metal = GameObject.FindGameObjectsWithTag("Coin");
-            // if (metal.Length == 1)
-            //     select(metal[0]);
         }
         if (metal.Length > 0){
             foreach (GameObject m in metal){
@@ -54,6 +36,9 @@ public class LineViewer : MonoBehaviour
                 line.endWidth = 0.01f;
                 line.material = cyan;
             }
+            sort();
+            if (selected == null)
+                select(metal[0]);
         }
     }
     void select(GameObject go){
@@ -74,7 +59,12 @@ public class LineViewer : MonoBehaviour
         Destroy(selected.GetComponent<Outline>());
         Destroy(selected.GetComponent<LineRenderer>());
     }
-    void coinChanger(){
+    public void deSelector(){
+        foreach (GameObject m in metal){
+            deSelect(m);
+        }
+    }
+    public void coinChanger(int value){
         deSelect(selected);
         int id = 0;
         for (int j = 0; j < metal.Length; j++) {
@@ -82,7 +72,7 @@ public class LineViewer : MonoBehaviour
                 id = j;
             }
         }
-        if (Input.GetAxisRaw("Horizontal") == 1){
+        if (value == 1){
             id++; // +x
         }
         else

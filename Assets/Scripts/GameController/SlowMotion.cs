@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class SlowMotion : MonoBehaviour
 {
-    void Update()
+    public void slowmo()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //Slowmotion
-        }
+        print("Sloooooow");
     }
 }
