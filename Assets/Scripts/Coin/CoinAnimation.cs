@@ -16,4 +16,11 @@ public class CoinAnimation : MonoBehaviour
             a.SetBool("OnGround", true);
         }
     }
+    public bool ongroud(){
+        if (Physics.Raycast(transform.position, Vector3.down, 0.5f)){
+            return true;
+        }
+        else
+            return false;
+    }
 }

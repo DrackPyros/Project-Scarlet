@@ -6,11 +6,13 @@ public class CoinThrow : MonoBehaviour
 {
     private float x, y;
     private int force = 150;
+    private GameObject player;
 
     void Start()
     {
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
+        player = GameObject.Find("Player");
+        x = player.GetComponent<InputController>().getX();
+        y = player.GetComponent<InputController>().getY();
         x = x * force;
         y = y * force;
         gameObject.GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, y * Time.deltaTime, 0, ForceMode.Impulse);

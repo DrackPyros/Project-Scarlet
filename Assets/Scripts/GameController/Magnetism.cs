@@ -2,32 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Polarity : MonoBehaviour
+public class Magnetism : MonoBehaviour
 {
-    public bool activar = false;
-    public int atraer = -1; // Si -1 inversa de push
-    public GameObject p1, p2;
-    private Rigidbody rb1, rb2;
-    private float efectArea;
+    // public bool activar = false;
+    // public int atraer = -1; // Si -1 inversa de push
+    private GameObject player, coin;
+    private Rigidbody playerRb, coinRb;
 
     void Start(){
-        rb1 = p1.GetComponent<Rigidbody>();
-        rb2 = p2.GetComponent<Rigidbody>();
+        player = GameObject.Find("Player");
+        playerRb = player.GetComponent<Rigidbody>();
     }
-    void Update(){
-        efectArea = Vector3.Distance(p1.transform.position, p2.transform.position);
-        if(Input.GetKey(KeyCode.Space)){
-            activar = true;
-            push();
+    public void push(float atraer){
+        // print(atraer);
+        setSelectedCoin();
+        if (coin != null){
+            float efectArea = Vector3.Distance(player.transform.position, coin.transform.position);
+            if (efectArea <= 20){
+                if(coin.GetComponent<CoinAnimation>().ongroud()){
+                    playerRb.AddForce(-coin.transform.position, ForceMode.Force);
+                    // player.transform.position = Vector3.MoveTowards(player.transform.position, coin.transform.position, atraer * playerRb.mass * Time.deltaTime);
+                } else{
+                    player.transform.position = Vector3.MoveTowards(player.transform.position, coin.transform.position, atraer * coinRb.mass * Time.deltaTime);
+                    coin.transform.position = Vector3.MoveTowards(coin.transform.position, player.transform.position, atraer * playerRb.mass * Time.deltaTime);
+                }
+                // if choca contra el suelo
+                // push recto
+                // clipear contra pj
+            }
         }
-        // if (activar)
     }
-    void push(){
-        if (efectArea <= 20){
-            p1.transform.position = Vector3.MoveTowards(p1.transform.position, p2.transform.position, atraer * rb2.mass * Time.deltaTime);
-            p2.transform.position = Vector3.MoveTowards(p2.transform.position, p1.transform.position, atraer * rb1.mass * Time.deltaTime);
-            // print(Vector3.Distance(p1.transform.position, p2.transform.position));
-
+    public void pull(float atraer){
+        print(atraer);
+        setSelectedCoin();
+        if (coin != null){
+            float efectArea = Vector3.Distance(player.transform.position, coin.transform.position);
+            if (efectArea <= 20){
+                player.transform.position = Vector3.MoveTowards(player.transform.position, coin.transform.position, atraer * coinRb.mass * Time.deltaTime);
+                coin.transform.position = Vector3.MoveTowards(coin.transform.position, player.transform.position, atraer * playerRb.mass * Time.deltaTime);
+                // clipear contra pj
+            }
         }
+    }
+    void setSelectedCoin(){
+        try{
+            coin = gameObject.GetComponent<LineViewer>().getSelected();
+            coinRb = coin.GetComponent<Rigidbody>();
+        }
+        catch {}
     }
 }

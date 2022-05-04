@@ -60,27 +60,30 @@ public class LineViewer : MonoBehaviour
         Destroy(selected.GetComponent<LineRenderer>());
     }
     public void deSelector(){
+        selected = null;
         foreach (GameObject m in metal){
             deSelect(m);
         }
     }
     public void coinChanger(int value){
-        deSelect(selected);
-        int id = 0;
-        for (int j = 0; j < metal.Length; j++) {
-            if (metal[j] == selected){
-                id = j;
+        if(metal.Length > 1){
+            deSelect(selected);
+            int id = 0;
+            for (int j = 0; j < metal.Length; j++) {
+                if (metal[j] == selected){
+                    id = j;
+                }
             }
+            if (value == 1){
+                id++; // +x
+            }
+            else
+                id--; // -x
+            if(id < 0) id = metal.Length-1;
+            if(id >= metal.Length) id = 0;
+            // print(id);
+            select(metal[id]);
         }
-        if (value == 1){
-            id++; // +x
-        }
-        else
-            id--; // -x
-        if(id < 0) id = metal.Length-1;
-        if(id >= metal.Length) id = 0;
-        // print(id);
-        select(metal[id]);
     }
     void sort(){
         GameObject temp;
@@ -92,6 +95,7 @@ public class LineViewer : MonoBehaviour
                   metal[i] = temp;
                }
             }
-         }
+        }
     }
+    public GameObject getSelected(){return selected;}
 }

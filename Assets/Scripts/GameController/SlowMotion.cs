@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class SlowMotion : MonoBehaviour
 {
-    public void slowmo()
+    public void slowmo(bool input)
     {
-        print("Sloooooow");
+        if(input){
+            Time.timeScale = 0.5f;
+            print("Sloooooow");
+        } else
+            Time.timeScale = 1;
     }
 }

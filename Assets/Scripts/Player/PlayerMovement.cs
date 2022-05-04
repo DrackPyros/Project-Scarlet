@@ -97,4 +97,5 @@ public class PlayerMovement : MonoBehaviour
         // if (other.CompareTag("Wall")){ }// bug tiempo de caida al suelo
     }
     public bool getCanjump() {return canjump;}
+    public bool getOnWalljump() {return onwalljump;}
 }

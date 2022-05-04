@@ -24,7 +24,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     ""name"": ""InputManager"",
     ""maps"": [
         {
-            ""name"": ""InputMaster"",
+            ""name"": ""InGame"",
             ""id"": ""01beb338-f8e2-4141-a72e-41ffafda1371"",
             ""actions"": [
                 {
@@ -56,21 +56,21 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Repel"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""efa05657-2063-4519-9d38-9c2109676f5c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Attract"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""3a07c52a-ef11-42e4-ad9e-cfeb3489ed90"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Shoot"",
@@ -85,9 +85,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""ec2bfb56-757a-4a98-a620-83af35d0ad94"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -212,39 +212,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""XAxis"",
-                    ""id"": ""6b40434d-714a-48f1-b6c7-743a20f94cd5"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""73d9e519-e4ef-4b1f-9394-b7c0531de552"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""b2ab8b7d-476d-4773-b143-2405a4208cd4"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""2D Vector"",
                     ""id"": ""8a9bb7b5-767b-4348-914a-b0cade4b0498"",
                     ""path"": ""2DVector"",
@@ -298,6 +265,17 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93b0cb57-ac88-4ef4-b0c3-3f54731730c1"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""Cross"",
@@ -388,6 +366,228 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""6882ad05-2b76-4a98-bb70-a4d52082f542"",
+            ""actions"": [
+                {
+                    ""name"": ""Accept"",
+                    ""type"": ""Button"",
+                    ""id"": ""11d3304c-e308-477f-a5b2-6f84d2d02571"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""2585bc86-51f2-4388-ae4f-d2c9c7977d03"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Navigate"",
+                    ""type"": ""Value"",
+                    ""id"": ""0ca78a68-d96d-4b4c-b763-b28fbca109d2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""65ce8c04-eff9-446f-8a49-e4e9673147d4"",
+                    ""path"": ""*/{Forward}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Accept"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2a05158-a2f0-4bcc-aa48-3f6b24fdad64"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""D-Pad"",
+                    ""id"": ""5a4f0988-1623-42fb-8972-b8a9631a2178"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""f1a57a16-4df6-46b7-98d7-1062aed175ca"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""66faea6f-592c-4741-9502-c5a7ce795112"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b729383c-8806-4bc2-ab0d-9a1c3443deeb"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""57f9c421-7283-4698-aff6-1791a367b4c0"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Stick"",
+                    ""id"": ""534f5822-4533-4c30-bc29-c1ef84a77328"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""f9c24fec-4922-4c67-8d53-393bc758a0d9"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""d83d0789-b840-4e90-aaf4-574edbdd2ae9"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8aef3c17-9a52-489c-9232-b1dc63ae21db"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9d8879ea-c804-4272-a9c1-5c880912fe66"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""e27cfb32-777d-40c2-8998-a6140fc3f6a1"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""838185f4-5607-45f7-9f9b-491d390cf1d4"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""7b130aa6-8b5c-42df-b6b2-8b484d08cbbf"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""52a0f959-e670-4b80-b35a-e9b49739df9b"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1dd58aa2-75b8-4cd6-8434-54a451d0a7a2"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -415,16 +615,21 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // InputMaster
-        m_InputMaster = asset.FindActionMap("InputMaster", throwIfNotFound: true);
-        m_InputMaster_Jump = m_InputMaster.FindAction("Jump", throwIfNotFound: true);
-        m_InputMaster_Time = m_InputMaster.FindAction("Time", throwIfNotFound: true);
-        m_InputMaster_ShootMode = m_InputMaster.FindAction("ShootMode", throwIfNotFound: true);
-        m_InputMaster_Repel = m_InputMaster.FindAction("Repel", throwIfNotFound: true);
-        m_InputMaster_Attract = m_InputMaster.FindAction("Attract", throwIfNotFound: true);
-        m_InputMaster_Shoot = m_InputMaster.FindAction("Shoot", throwIfNotFound: true);
-        m_InputMaster_Move = m_InputMaster.FindAction("Move", throwIfNotFound: true);
-        m_InputMaster_Selector = m_InputMaster.FindAction("Selector", throwIfNotFound: true);
+        // InGame
+        m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
+        m_InGame_Jump = m_InGame.FindAction("Jump", throwIfNotFound: true);
+        m_InGame_Time = m_InGame.FindAction("Time", throwIfNotFound: true);
+        m_InGame_ShootMode = m_InGame.FindAction("ShootMode", throwIfNotFound: true);
+        m_InGame_Repel = m_InGame.FindAction("Repel", throwIfNotFound: true);
+        m_InGame_Attract = m_InGame.FindAction("Attract", throwIfNotFound: true);
+        m_InGame_Shoot = m_InGame.FindAction("Shoot", throwIfNotFound: true);
+        m_InGame_Move = m_InGame.FindAction("Move", throwIfNotFound: true);
+        m_InGame_Selector = m_InGame.FindAction("Selector", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Accept = m_Menu.FindAction("Accept", throwIfNotFound: true);
+        m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
+        m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -481,64 +686,64 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // InputMaster
-    private readonly InputActionMap m_InputMaster;
-    private IInputMasterActions m_InputMasterActionsCallbackInterface;
-    private readonly InputAction m_InputMaster_Jump;
-    private readonly InputAction m_InputMaster_Time;
-    private readonly InputAction m_InputMaster_ShootMode;
-    private readonly InputAction m_InputMaster_Repel;
-    private readonly InputAction m_InputMaster_Attract;
-    private readonly InputAction m_InputMaster_Shoot;
-    private readonly InputAction m_InputMaster_Move;
-    private readonly InputAction m_InputMaster_Selector;
-    public struct InputMasterActions
+    // InGame
+    private readonly InputActionMap m_InGame;
+    private IInGameActions m_InGameActionsCallbackInterface;
+    private readonly InputAction m_InGame_Jump;
+    private readonly InputAction m_InGame_Time;
+    private readonly InputAction m_InGame_ShootMode;
+    private readonly InputAction m_InGame_Repel;
+    private readonly InputAction m_InGame_Attract;
+    private readonly InputAction m_InGame_Shoot;
+    private readonly InputAction m_InGame_Move;
+    private readonly InputAction m_InGame_Selector;
+    public struct InGameActions
     {
         private @InputManager m_Wrapper;
-        public InputMasterActions(@InputManager wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Jump => m_Wrapper.m_InputMaster_Jump;
-        public InputAction @Time => m_Wrapper.m_InputMaster_Time;
-        public InputAction @ShootMode => m_Wrapper.m_InputMaster_ShootMode;
-        public InputAction @Repel => m_Wrapper.m_InputMaster_Repel;
-        public InputAction @Attract => m_Wrapper.m_InputMaster_Attract;
-        public InputAction @Shoot => m_Wrapper.m_InputMaster_Shoot;
-        public InputAction @Move => m_Wrapper.m_InputMaster_Move;
-        public InputAction @Selector => m_Wrapper.m_InputMaster_Selector;
-        public InputActionMap Get() { return m_Wrapper.m_InputMaster; }
+        public InGameActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Jump => m_Wrapper.m_InGame_Jump;
+        public InputAction @Time => m_Wrapper.m_InGame_Time;
+        public InputAction @ShootMode => m_Wrapper.m_InGame_ShootMode;
+        public InputAction @Repel => m_Wrapper.m_InGame_Repel;
+        public InputAction @Attract => m_Wrapper.m_InGame_Attract;
+        public InputAction @Shoot => m_Wrapper.m_InGame_Shoot;
+        public InputAction @Move => m_Wrapper.m_InGame_Move;
+        public InputAction @Selector => m_Wrapper.m_InGame_Selector;
+        public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InputMasterActions set) { return set.Get(); }
-        public void SetCallbacks(IInputMasterActions instance)
+        public static implicit operator InputActionMap(InGameActions set) { return set.Get(); }
+        public void SetCallbacks(IInGameActions instance)
         {
-            if (m_Wrapper.m_InputMasterActionsCallbackInterface != null)
+            if (m_Wrapper.m_InGameActionsCallbackInterface != null)
             {
-                @Jump.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnJump;
-                @Time.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnTime;
-                @Time.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnTime;
-                @Time.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnTime;
-                @ShootMode.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShootMode;
-                @ShootMode.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShootMode;
-                @ShootMode.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShootMode;
-                @Repel.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnRepel;
-                @Repel.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnRepel;
-                @Repel.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnRepel;
-                @Attract.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnAttract;
-                @Attract.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnAttract;
-                @Attract.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnAttract;
-                @Shoot.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnShoot;
-                @Move.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnMove;
-                @Selector.started -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnSelector;
-                @Selector.performed -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnSelector;
-                @Selector.canceled -= m_Wrapper.m_InputMasterActionsCallbackInterface.OnSelector;
+                @Jump.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
+                @Time.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnTime;
+                @Time.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnTime;
+                @Time.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnTime;
+                @ShootMode.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnShootMode;
+                @ShootMode.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnShootMode;
+                @ShootMode.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnShootMode;
+                @Repel.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnRepel;
+                @Repel.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnRepel;
+                @Repel.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnRepel;
+                @Attract.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttract;
+                @Attract.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttract;
+                @Attract.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttract;
+                @Shoot.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnShoot;
+                @Move.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
+                @Selector.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
+                @Selector.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
+                @Selector.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
             }
-            m_Wrapper.m_InputMasterActionsCallbackInterface = instance;
+            m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Jump.started += instance.OnJump;
@@ -568,7 +773,56 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
             }
         }
     }
-    public InputMasterActions @InputMaster => new InputMasterActions(this);
+    public InGameActions @InGame => new InGameActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_Menu_Accept;
+    private readonly InputAction m_Menu_Back;
+    private readonly InputAction m_Menu_Navigate;
+    public struct MenuActions
+    {
+        private @InputManager m_Wrapper;
+        public MenuActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Accept => m_Wrapper.m_Menu_Accept;
+        public InputAction @Back => m_Wrapper.m_Menu_Back;
+        public InputAction @Navigate => m_Wrapper.m_Menu_Navigate;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @Accept.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnAccept;
+                @Accept.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnAccept;
+                @Accept.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnAccept;
+                @Back.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                @Navigate.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
+                @Navigate.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
+                @Navigate.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Accept.started += instance.OnAccept;
+                @Accept.performed += instance.OnAccept;
+                @Accept.canceled += instance.OnAccept;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
+                @Navigate.started += instance.OnNavigate;
+                @Navigate.performed += instance.OnNavigate;
+                @Navigate.canceled += instance.OnNavigate;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -587,7 +841,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    public interface IInputMasterActions
+    public interface IInGameActions
     {
         void OnJump(InputAction.CallbackContext context);
         void OnTime(InputAction.CallbackContext context);
@@ -597,5 +851,11 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnSelector(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnAccept(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
+        void OnNavigate(InputAction.CallbackContext context);
     }
 }
