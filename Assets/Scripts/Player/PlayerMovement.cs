@@ -11,16 +11,16 @@ public class PlayerMovement : MonoBehaviour
     private int brakeDelay = 20;
     private int runSpeed = 550;
     private int walkSpeed = 400;
-    private int jumpForce = 400;
-    public bool canjump = true;
-    public bool canwalljump = false;
+    public int jumpForce = 400;
+    // public bool canjump = true;
+    // public bool canwalljump = false;
     public bool onwalljump = false;
     public int direction = 0;
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update(){
-        if (canjump == false && rb.velocity.y < 0) fall();
+        // if (canjump == false && rb.velocity.y < 0) fall();
         ongroud();
         onwall();
     }
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
             move(runSpeed, direction);
     }
     public void decelerate(){
-        if (transform.position.y > 1 && canjump){
+        if (transform.position.y > 1 && ongroud()){
             if (speedUnitFrames == (runDelayFrames + 1)) speedUnitFrames = brakeDelay;
             if (speedUnitFrames > 0){
                 speedUnitFrames--;
@@ -49,18 +49,20 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector3.right * direction * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void jump(){
-        if (canjump){
-            canjump = false;
+        if (ongroud()){
+            print("saltar");
+            // canjump = false;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            // rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
         }
-        else if (canwalljump) walljump();
+        else if (onwall()) walljump();
     }
     void fall(){
         rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
     }
     void walljump(){
         rb.AddForce(walkSpeed * -direction, jumpForce, 0, ForceMode.Impulse);
-        canwalljump = false;
+        // canwalljump = false;
         onwalljump = true;
         rotate(-direction);
     }
@@ -76,26 +78,24 @@ public class PlayerMovement : MonoBehaviour
         else if (onwalljump)
             direction = -direction; 
     }
-    void ongroud(){ // Retrasar un poco
+    bool ongroud(){ // Retrasar un poco
         if (Physics.Raycast(transform.position, Vector3.down, 0.5f)){ // Retrasar un poco
-            // Debug.DrawRay(transform.position, Vector3.down * 0.5f, Color.yellow);
-            canjump = true;
             onwalljump = false;
+            return true;
         }
         else
-            canjump = false;
+            return false;
     }
-    void onwall(){
-        if (Physics.Raycast(transform.position, transform.right * direction, 0.5f) && !canjump){
-            canwalljump = true;
+    bool onwall(){
+        if (Physics.Raycast(transform.position, transform.right * direction, 0.5f) && !ongroud()){
+            return true;
         }
         else
-            canwalljump = false;
+            return false;
     }
     void OnTriggerEnter(Collider other){
         // if (other.CompareTag("Floor") || other.CompareTag("Coin")){}
         // if (other.CompareTag("Wall")){ }// bug tiempo de caida al suelo
     }
-    public bool getCanjump() {return canjump;}
     public bool getOnWalljump() {return onwalljump;}
 }
