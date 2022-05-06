@@ -33,13 +33,16 @@ public class Trajectory : MonoBehaviour
     public void SimulateTraectory(GameObject coinPrefab, Vector3 pos){
         var ghostObj = Instantiate(coinPrefab, pos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
+        ghostObj.GetComponent<CoinThrow>().metodo2();
 
         _line.positionCount = _maxFrames;
 
         for (int i = 0; i < _maxFrames; i++){
+            print(ghostObj.transform.position);
             _physicsScene.Simulate(Time.fixedDeltaTime);
             _line.SetPosition(i, ghostObj.transform.position);
         }
+        print("---------------");
         Destroy(ghostObj.gameObject);
     }
 }

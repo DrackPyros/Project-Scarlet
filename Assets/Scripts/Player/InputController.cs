@@ -52,7 +52,7 @@ public class InputController : MonoBehaviour
     }
     private void OnEnable(){controls.Enable();}
     private void OnDisable(){controls.Disable();}
-    void move(Vector2 aux){
+    void move(Vector2 aux){ // limitar movimiento aereo
         // print (aux);
         if(!timezone && !shootmode){
             value = aux;
@@ -89,10 +89,11 @@ public class InputController : MonoBehaviour
             player.GetComponent<CoinThrowPosition>().coinPosition(x, y);
     }
     void generateTrayectory(float x, float y){
-        if (gameController.GetComponent<LineRenderer>().material == invisibleMaterial)
+        if (gameController.GetComponent<LineRenderer>().material.name != lineMaterial.name){
+            // print(gameController.GetComponent<LineRenderer>().material.name);
             gameController.GetComponent<LineRenderer>().material = lineMaterial;
-        else
-            _projection.SimulateTraectory(_coin, new Vector3(transform.position.x + x, transform.position.y + y, 0));
+        }
+        _projection.SimulateTraectory(_coin, new Vector3(transform.position.x + x, transform.position.y + y, 0));
     }
     void destroyTrayectory(){
         shootmode = false;

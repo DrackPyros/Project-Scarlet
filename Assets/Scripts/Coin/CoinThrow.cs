@@ -8,8 +8,12 @@ public class CoinThrow : MonoBehaviour
     private int force = 150;
     private GameObject player;
 
-    void Start()
+    void Start() //reordenar
     {
+        metodo2();
+    }
+    public void metodo2(){
+        print("metodo2");
         player = GameObject.Find("Player");
         x = player.GetComponent<InputController>().getX();
         y = player.GetComponent<InputController>().getY();
@@ -19,5 +23,6 @@ public class CoinThrow : MonoBehaviour
         // print(x +" - "+ y);
         // print((x * Time.deltaTime) + " - " + ((x+y) * Time.deltaTime));
         // Destroy(gameObject, 5);
+    
     }
 }

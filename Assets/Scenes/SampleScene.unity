@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _obstaclesParent: {fileID: 970508845}
   _line: {fileID: 21689686}
-  _maxFrames: 100
+  _maxFrames: 25
 --- !u!120 &21689686
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21689679}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
@@ -320,7 +320,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
