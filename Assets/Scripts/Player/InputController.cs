@@ -11,14 +11,10 @@ public class InputController : MonoBehaviour
     private bool timezone = false;
     private bool shootmode = false;
     private float x = 0, y = 0;
-    private Trajectory _projection;
-    [SerializeField] private GameObject _coin;
-    [SerializeField] private Material invisibleMaterial, lineMaterial;
     void Awake(){
         controls = new InputManager();
         player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController");
-        _projection = gameController.GetComponent<Trajectory>();
 
         controls.InGame.Time.performed += _ => timeSlow();
         controls.InGame.Time.canceled += _ => stopSlow();
@@ -44,7 +40,7 @@ public class InputController : MonoBehaviour
             gameController.GetComponent<LineViewer>().setWatch(false);
             if(!shootmode){
                 if(controls.InGame.Move.IsPressed())
-                    move(value); //Check air movement
+                    move(value);
                 else
                     player.GetComponent<PlayerMovement>().decelerate();
             }
@@ -52,8 +48,7 @@ public class InputController : MonoBehaviour
     }
     private void OnEnable(){controls.Enable();}
     private void OnDisable(){controls.Disable();}
-    void move(Vector2 aux){ // limitar movimiento aereo
-        // print (aux);
+    void move(Vector2 aux){
         if(!timezone && !shootmode){
             value = aux;
             int val = (int)Mathf.Round(aux.x);
@@ -89,15 +84,14 @@ public class InputController : MonoBehaviour
             player.GetComponent<CoinThrowPosition>().coinPosition(x, y);
     }
     void generateTrayectory(float x, float y){
-        if (gameController.GetComponent<LineRenderer>().material.name != lineMaterial.name){
-            // print(gameController.GetComponent<LineRenderer>().material.name);
-            gameController.GetComponent<LineRenderer>().material = lineMaterial;
+        if (gameController.GetComponent<LineRenderer>().enabled == false){
+            gameController.GetComponent<LineRenderer>().enabled = true;
         }
-        _projection.SimulateTraectory(_coin, new Vector3(transform.position.x + x, transform.position.y + y, 0));
+        gameController.GetComponent<Trajectory>().SimulateTraectory(new Vector3(transform.position.x + x, transform.position.y + y, 0));
     }
     void destroyTrayectory(){
         shootmode = false;
-        gameController.GetComponent<LineRenderer>().material = invisibleMaterial;
+        gameController.GetComponent<LineRenderer>().enabled = false;;
     }
     public float getX(){ return x; }
     public float getY(){ return y; }

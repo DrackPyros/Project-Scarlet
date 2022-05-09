@@ -8,7 +8,6 @@ public class SlowMotion : MonoBehaviour
     {
         if(input){
             Time.timeScale = 0.5f;
-            // print("Sloooooow");
         } else
             Time.timeScale = 1;
     }

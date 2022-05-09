@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
     private int runSpeed = 550;
     private int walkSpeed = 400;
     public int jumpForce = 400;
-    // public bool canjump = true;
-    // public bool canwalljump = false;
     public bool onwalljump = false;
     public int direction = 0;
     void Start(){
@@ -25,12 +23,16 @@ public class PlayerMovement : MonoBehaviour
         onwall();
     }
     public void accelerate(int direction){
-        if (speedUnitFrames <= runDelayFrames){
-            move(walkSpeed, direction);
-            speedUnitFrames++;
+        if (ongroud()){
+            if (speedUnitFrames <= runDelayFrames){
+                move(walkSpeed, direction);
+                speedUnitFrames++;
+            }
+            else
+                move(runSpeed, direction);
         }
         else
-            move(runSpeed, direction);
+            move(walkSpeed, direction);
     }
     public void decelerate(){
         if (transform.position.y > 1 && ongroud()){
@@ -50,10 +52,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void jump(){
         if (ongroud()){
-            print("saltar");
-            // canjump = false;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            // rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
         }
         else if (onwall()) walljump();
     }
@@ -78,9 +77,11 @@ public class PlayerMovement : MonoBehaviour
         else if (onwalljump)
             direction = -direction; 
     }
-    bool ongroud(){ // Retrasar un poco
-        if (Physics.Raycast(transform.position, Vector3.down, 0.5f)){ // Retrasar un poco
+    bool ongroud(){
+        if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, 0.5f) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
             onwalljump = false;
+            // Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, 0.5f);
+            // Debug.DrawLine(transform.position - (Vector3.right / 2), Vector3.down, Color.red, 0.5f);
             return true;
         }
         else

@@ -13,7 +13,10 @@ public class CoinAnimation : MonoBehaviour
     void OnTriggerEnter(Collider other){        
         if (other.CompareTag("Floor") || other.CompareTag("Coin"))
         {
-            a.SetBool("OnGround", true);
+            try{
+                a.SetBool("OnGround", true);
+            }
+            catch{}
         }
     }
     public bool ongroud(){

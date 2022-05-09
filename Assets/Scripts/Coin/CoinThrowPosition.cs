@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinThrowPosition : MonoBehaviour
 {
-    public GameObject coin;
+    [SerializeField] private GameObject coin;
     public void coinPosition(float horizontal, float vertical)
     {
         if (horizontal == 0 && vertical == 0){

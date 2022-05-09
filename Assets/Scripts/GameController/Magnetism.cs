@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Magnetism : MonoBehaviour
 {
-    // public bool activar = false;
-    // public int atraer = -1; // Si -1 inversa de push
     private GameObject player, coin;
     private Rigidbody playerRb, coinRb;
 
@@ -28,8 +26,7 @@ public class Magnetism : MonoBehaviour
                 }
                 // if choca contra el suelo
                 // push recto
-                // clipear contra pj
-            }
+             }
         }
     }
     public void pull(float atraer){

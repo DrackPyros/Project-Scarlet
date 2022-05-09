@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LineViewer : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
+    [SerializeField] private Material cyan;
     private GameObject[] metal = new GameObject[]{};
-    public GameObject player;
     private GameObject selected = null;
-    public Material cyan;
     private bool watch = false;
     
     void Update(){

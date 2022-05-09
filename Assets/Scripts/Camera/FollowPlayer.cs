@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    public GameObject player;
+    [SerializeField] private GameObject player;
     private Vector3 offset = new Vector3(0, 2, -5);
     void LateUpdate()
     {

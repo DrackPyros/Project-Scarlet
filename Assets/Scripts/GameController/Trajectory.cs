@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Trajectory : MonoBehaviour
 {
-    private Scene _simulationScene;
-    private PhysicsScene _physicsScene;
     [SerializeField] private Transform _obstaclesParent;
     [SerializeField] private LineRenderer _line;
     [SerializeField] private int _maxFrames = 100;
-
+    [SerializeField] private GameObject coinPrefab;
+    private Scene _simulationScene;
+    private PhysicsScene _physicsScene;
 
     void Start()
     {
@@ -27,22 +27,20 @@ public class Trajectory : MonoBehaviour
                 SceneManager.MoveGameObjectToScene(ghostObj, _simulationScene);
             }
         }
-
     }
     
-    public void SimulateTraectory(GameObject coinPrefab, Vector3 pos){
+    public void SimulateTraectory(Vector3 pos){ // closer trayectory start
         var ghostObj = Instantiate(coinPrefab, pos, Quaternion.identity);
+        ghostObj.tag = "Untagged";
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
-        ghostObj.GetComponent<CoinThrow>().metodo2();
+        ghostObj.GetComponent<CoinThrow>().ignite();
 
         _line.positionCount = _maxFrames;
 
         for (int i = 0; i < _maxFrames; i++){
-            print(ghostObj.transform.position);
             _physicsScene.Simulate(Time.fixedDeltaTime);
             _line.SetPosition(i, ghostObj.transform.position);
         }
-        print("---------------");
         Destroy(ghostObj.gameObject);
     }
 }
