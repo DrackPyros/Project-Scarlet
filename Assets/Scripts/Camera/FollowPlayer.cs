@@ -5,7 +5,10 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    private Vector3 offset = new Vector3(0, 2, -5);
+    private Vector3 offset;
+    void Start(){
+        offset = transform.position;
+    }
     void LateUpdate()
     {
         transform.position = player.transform.position + offset;

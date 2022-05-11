@@ -91,13 +91,31 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Selector"",
+                    ""name"": ""CoinSelector"",
                     ""type"": ""Value"",
                     ""id"": ""a68dcb26-cb3f-4fa6-899f-325b7fa98974"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""06040360-582c-4f40-aadf-9a178d36943f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VialSelector"",
+                    ""type"": ""Button"",
+                    ""id"": ""80fc660d-eeb8-494b-b4a5-0efb984599c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -284,7 +302,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -295,7 +313,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -306,7 +324,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -317,7 +335,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -328,7 +346,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -339,7 +357,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Selector"",
+                    ""action"": ""CoinSelector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -364,6 +382,94 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""180b51ea-58c8-4dba-b29c-6a53064c6659"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05a47ad3-ebfd-47d4-99c5-19919791fb3e"",
+                    ""path"": ""*/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""4d46da2f-7b81-4c25-85b1-595802bc8d43"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ed50e39d-9005-41d6-95e7-3a65bdaf2a42"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8f21c07e-dc9f-47d8-89f7-8e09b8082dba"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""f9fea760-37a3-494a-a35f-5fe1bb8bd243"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e0cd18bc-f603-41c2-b98c-7cb43f4577f0"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""acc39af2-7489-44c1-9d19-e2ff5edfd903"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""VialSelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -624,7 +730,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         m_InGame_Attract = m_InGame.FindAction("Attract", throwIfNotFound: true);
         m_InGame_Shoot = m_InGame.FindAction("Shoot", throwIfNotFound: true);
         m_InGame_Move = m_InGame.FindAction("Move", throwIfNotFound: true);
-        m_InGame_Selector = m_InGame.FindAction("Selector", throwIfNotFound: true);
+        m_InGame_CoinSelector = m_InGame.FindAction("CoinSelector", throwIfNotFound: true);
+        m_InGame_Menu = m_InGame.FindAction("Menu", throwIfNotFound: true);
+        m_InGame_VialSelector = m_InGame.FindAction("VialSelector", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Accept = m_Menu.FindAction("Accept", throwIfNotFound: true);
@@ -696,7 +804,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Attract;
     private readonly InputAction m_InGame_Shoot;
     private readonly InputAction m_InGame_Move;
-    private readonly InputAction m_InGame_Selector;
+    private readonly InputAction m_InGame_CoinSelector;
+    private readonly InputAction m_InGame_Menu;
+    private readonly InputAction m_InGame_VialSelector;
     public struct InGameActions
     {
         private @InputManager m_Wrapper;
@@ -708,7 +818,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         public InputAction @Attract => m_Wrapper.m_InGame_Attract;
         public InputAction @Shoot => m_Wrapper.m_InGame_Shoot;
         public InputAction @Move => m_Wrapper.m_InGame_Move;
-        public InputAction @Selector => m_Wrapper.m_InGame_Selector;
+        public InputAction @CoinSelector => m_Wrapper.m_InGame_CoinSelector;
+        public InputAction @Menu => m_Wrapper.m_InGame_Menu;
+        public InputAction @VialSelector => m_Wrapper.m_InGame_VialSelector;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -739,9 +851,15 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMove;
-                @Selector.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
-                @Selector.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
-                @Selector.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnSelector;
+                @CoinSelector.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnCoinSelector;
+                @CoinSelector.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnCoinSelector;
+                @CoinSelector.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnCoinSelector;
+                @Menu.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @VialSelector.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnVialSelector;
+                @VialSelector.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnVialSelector;
+                @VialSelector.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnVialSelector;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -767,9 +885,15 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Selector.started += instance.OnSelector;
-                @Selector.performed += instance.OnSelector;
-                @Selector.canceled += instance.OnSelector;
+                @CoinSelector.started += instance.OnCoinSelector;
+                @CoinSelector.performed += instance.OnCoinSelector;
+                @CoinSelector.canceled += instance.OnCoinSelector;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
+                @VialSelector.started += instance.OnVialSelector;
+                @VialSelector.performed += instance.OnVialSelector;
+                @VialSelector.canceled += instance.OnVialSelector;
             }
         }
     }
@@ -850,7 +974,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnAttract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnSelector(InputAction.CallbackContext context);
+        void OnCoinSelector(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
+        void OnVialSelector(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

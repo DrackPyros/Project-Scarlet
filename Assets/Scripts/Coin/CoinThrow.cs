@@ -18,7 +18,7 @@ public class CoinThrow : MonoBehaviour
         y = player.GetComponent<InputController>().getY();
         x = x * force;
         y = y * force;
-        gameObject.GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, y * Time.deltaTime, 0, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, y * Time.deltaTime, 0, ForceMode.Impulse);
         // Destroy(gameObject, 5);
     
     }

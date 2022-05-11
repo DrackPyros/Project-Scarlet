@@ -22,12 +22,15 @@ public class InputController : MonoBehaviour
         controls.InGame.Jump.performed += _ => player.GetComponent<PlayerMovement>().jump();
 
         controls.InGame.Move.performed += ctx => move(ctx.ReadValue<Vector2>());
-        controls.InGame.Move.canceled += ctx => {x = 0; y = 0;};
+        controls.InGame.Move.canceled += _ => {x = 0; y = 0;};
 
-        controls.InGame.Selector.performed += contx => select(contx.ReadValue<float>());
+        controls.InGame.CoinSelector.performed += contx => select(contx.ReadValue<float>());
 
         controls.InGame.Repel.performed += ctx => gameController.GetComponent<Magnetism>().push(-(ctx.ReadValue<float>()));
         controls.InGame.Attract.performed += ctx => gameController.GetComponent<Magnetism>().pull(ctx.ReadValue<float>());
+
+        controls.InGame.Repel.canceled += _ => gameController.GetComponent<Magnetism>().nullForce(false);
+        controls.InGame.Attract.canceled += _ => gameController.GetComponent<Magnetism>().nullForce(true);
 
         controls.InGame.ShootMode.performed += _ => shootmode = true;
         controls.InGame.ShootMode.canceled += _ => destroyTrayectory();
@@ -48,15 +51,15 @@ public class InputController : MonoBehaviour
     }
     private void OnEnable(){controls.Enable();}
     private void OnDisable(){controls.Disable();}
-    void move(Vector2 aux){
-        if(!timezone && !shootmode){
+    void move(Vector2 aux){ //TODO: revisar mover time
+        if(!shootmode){
             value = aux;
             int val = (int)Mathf.Round(aux.x);
             if (!player.GetComponent<PlayerMovement>().getOnWalljump()){
                 player.GetComponent<PlayerMovement>().accelerate(val);
                 player.GetComponent<PlayerMovement>().rotate(val);
             }
-        } else if (shootmode){ 
+        } else { 
             x = aux.x;
             y = aux.y;
             generateTrayectory(x, y);

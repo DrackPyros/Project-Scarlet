@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     void move(int speed, int direction){
+        // print("entra");
         rb.AddForce(Vector3.right * direction * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void jump(){
@@ -93,10 +94,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             return false;
-    }
-    void OnTriggerEnter(Collider other){
-        // if (other.CompareTag("Floor") || other.CompareTag("Coin")){}
-        // if (other.CompareTag("Wall")){ }// bug tiempo de caida al suelo
     }
     public bool getOnWalljump() {return onwalljump;}
 }

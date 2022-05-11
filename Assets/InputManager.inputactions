@@ -69,13 +69,31 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Selector",
+                    "name": "CoinSelector",
                     "type": "Value",
                     "id": "a68dcb26-cb3f-4fa6-899f-325b7fa98974",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "06040360-582c-4f40-aadf-9a178d36943f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "VialSelector",
+                    "type": "Button",
+                    "id": "80fc660d-eeb8-494b-b4a5-0efb984599c3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -262,7 +280,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -273,7 +291,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -284,7 +302,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -295,7 +313,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -306,7 +324,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -317,7 +335,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Selector",
+                    "action": "CoinSelector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -342,6 +360,94 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "180b51ea-58c8-4dba-b29c-6a53064c6659",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "05a47ad3-ebfd-47d4-99c5-19919791fb3e",
+                    "path": "*/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "4d46da2f-7b81-4c25-85b1-595802bc8d43",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VialSelector",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "ed50e39d-9005-41d6-95e7-3a65bdaf2a42",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "VialSelector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "8f21c07e-dc9f-47d8-89f7-8e09b8082dba",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "VialSelector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "f9fea760-37a3-494a-a35f-5fe1bb8bd243",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VialSelector",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "e0cd18bc-f603-41c2-b98c-7cb43f4577f0",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "VialSelector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "acc39af2-7489-44c1-9d19-e2ff5edfd903",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "VialSelector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

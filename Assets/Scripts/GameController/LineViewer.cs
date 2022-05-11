@@ -55,7 +55,7 @@ public class LineViewer : MonoBehaviour
         }
         catch (MissingComponentException){ }
     }
-    void deSelect(GameObject selected){
+    public void deSelect(GameObject selected){
         Destroy(selected.GetComponent<Outline>());
         Destroy(selected.GetComponent<LineRenderer>());
     }
@@ -89,11 +89,11 @@ public class LineViewer : MonoBehaviour
         GameObject temp;
         for (int j = 0; j <= metal.Length - 2; j++) {
             for (int i = 0; i <= metal.Length - 2; i++) {
-               if (Vector3.Distance(player.transform.position, metal[i].transform.position) > Vector3.Distance(player.transform.position, metal[i +1].transform.position)){
-                  temp = metal[i + 1];
-                  metal[i + 1] = metal[i];
-                  metal[i] = temp;
-               }
+                if (Vector3.Distance(player.transform.position, metal[i].transform.position) > Vector3.Distance(player.transform.position, metal[i +1].transform.position)){
+                    temp = metal[i + 1];
+                    metal[i + 1] = metal[i];
+                    metal[i] = temp;
+                }
             }
         }
     }
