@@ -23,16 +23,19 @@ public class PlayerMovement : MonoBehaviour
         onwall();
     }
     public void accelerate(int direction){
-        if (ongroud()){
-            if (speedUnitFrames <= runDelayFrames){
-                move(walkSpeed, direction);
-                speedUnitFrames++;
+        print(rb.velocity.x);
+        if (rb.velocity.x < 15 && rb.velocity.x > -15){ // Medir esto
+            if (ongroud()){
+                if (speedUnitFrames <= runDelayFrames){
+                    move(walkSpeed, direction);
+                    speedUnitFrames++;
+                }
+                else
+                    move(runSpeed, direction);
             }
             else
-                move(runSpeed, direction);
+                move(walkSpeed, direction);
         }
-        else
-            move(walkSpeed, direction);
     }
     public void decelerate(){
         if (transform.position.y > 1 && ongroud()){
@@ -96,4 +99,6 @@ public class PlayerMovement : MonoBehaviour
             return false;
     }
     public bool getOnWalljump() {return onwalljump;}
+    public int getSpeedUnitFrames() {return speedUnitFrames;}
+    public int getRunDelayFrames() {return runDelayFrames;}
 }
