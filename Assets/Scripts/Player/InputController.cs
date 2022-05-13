@@ -5,97 +5,97 @@ using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
-    private InputManager controls;
-    private GameObject player, gameController;
-    private Vector2 value;
-    private bool timezone = false;
-    private bool shootmode = false;
-    private float x = 0, y = 0;
+    private InputManager _controls;
+    private GameObject _player, _gameController;
+    private Vector2 _value;
+    private bool _timezone = false;
+    private bool _shootmode = false;
+    private float _x = 0, _y = 0;
     void Awake(){
-        controls = new InputManager();
-        player = GameObject.Find("Player");
-        gameController = GameObject.Find("GameController");
+        _controls = new InputManager();
+        _player = GameObject.Find("Player");
+        _gameController = GameObject.Find("GameController");
 
-        controls.InGame.Time.performed += _ => timeSlow();
-        controls.InGame.Time.canceled += _ => stopSlow();
+        _controls.InGame.Time.performed += _ => timeSlow();
+        _controls.InGame.Time.canceled += _ => stopSlow();
 
-        controls.InGame.Jump.performed += _ => player.GetComponent<PlayerMovement>().jump();
+        _controls.InGame.Jump.performed += _ => _player.GetComponent<PlayerMovement>().jump();
 
-        controls.InGame.Move.performed += ctx => move(ctx.ReadValue<Vector2>());
-        controls.InGame.Move.canceled += _ => {x = 0; y = 0;};
+        _controls.InGame.Move.performed += ctx => move(ctx.ReadValue<Vector2>());
+        _controls.InGame.Move.canceled += _ => {_x = 0; _y = 0;};
 
-        controls.InGame.CoinSelector.performed += contx => select(contx.ReadValue<float>());
+        _controls.InGame.CoinSelector.performed += contx => select(contx.ReadValue<float>());
 
-        controls.InGame.Repel.performed += ctx => gameController.GetComponent<Magnetism>().push(-(ctx.ReadValue<float>()));
-        controls.InGame.Attract.performed += ctx => gameController.GetComponent<Magnetism>().pull(ctx.ReadValue<float>());
+        _controls.InGame.Repel.performed += ctx => _gameController.GetComponent<Magnetism>().push(-(ctx.ReadValue<float>()));
+        _controls.InGame.Attract.performed += ctx => _gameController.GetComponent<Magnetism>().pull(ctx.ReadValue<float>());
 
-        controls.InGame.Repel.canceled += _ => gameController.GetComponent<Magnetism>().nullForce(false);
-        controls.InGame.Attract.canceled += _ => gameController.GetComponent<Magnetism>().nullForce(true);
+        _controls.InGame.Repel.canceled += _ => _gameController.GetComponent<Magnetism>().nullForce(false);
+        _controls.InGame.Attract.canceled += _ => _gameController.GetComponent<Magnetism>().nullForce(true);
 
-        controls.InGame.ShootMode.performed += _ => shootmode = true;
-        controls.InGame.ShootMode.canceled += _ => destroyTrayectory();
+        _controls.InGame.ShootMode.performed += _ => _shootmode = true;
+        _controls.InGame.ShootMode.canceled += _ => destroyTrayectory();
 
-        controls.InGame.Shoot.performed += _ => shoot();
+        _controls.InGame.Shoot.performed += _ => shoot();
     }
     void Update(){
-        if(!controls.InGame.Time.IsPressed()){
-            timezone = false;
-            gameController.GetComponent<LineViewer>().setWatch(false);
-            if(!shootmode){
-                if(controls.InGame.Move.IsPressed())
-                    move(value);
+        if(!_controls.InGame.Time.IsPressed()){
+            _timezone = false;
+            _gameController.GetComponent<LineViewer>().setWatch(false);
+            if(!_shootmode){
+                if(_controls.InGame.Move.IsPressed())
+                    move(_value);
                 else
-                    player.GetComponent<PlayerMovement>().decelerate();
+                    _player.GetComponent<PlayerMovement>().decelerate();
             }
         }
     }
-    private void OnEnable(){controls.Enable();}
-    private void OnDisable(){controls.Disable();}
+    private void OnEnable(){_controls.Enable();}
+    private void OnDisable(){_controls.Disable();}
     void move(Vector2 aux){ //TODO: revisar mover time
-        if(!shootmode){
-            value = aux;
+        if(!_shootmode){
+            _value = aux;
             int val = (int)Mathf.Round(aux.x);
-            if (!player.GetComponent<PlayerMovement>().getOnWalljump()){
-                player.GetComponent<PlayerMovement>().accelerate(val);
-                player.GetComponent<PlayerMovement>().rotate(val);
+            if (!_player.GetComponent<PlayerMovement>().getOnWalljump()){
+                _player.GetComponent<PlayerMovement>().accelerate(val);
+                _player.GetComponent<PlayerMovement>().rotate(val);
             }
         } else { 
-            x = aux.x;
-            y = aux.y;
-            generateTrayectory(x, y);
+            _x = aux.x;
+            _y = aux.y;
+            generateTrayectory(_x, _y);
         }
     }
     void timeSlow(){
-        timezone = true;
-        gameController.GetComponent<SlowMotion>().slowmo(true);
-        gameController.GetComponent<LineViewer>().setWatch(true);
-        gameController.GetComponent<LineViewer>().viewer();
+        _timezone = true;
+        _gameController.GetComponent<SlowMotion>().slowmo(true);
+        _gameController.GetComponent<LineViewer>().setWatch(true);
+        _gameController.GetComponent<LineViewer>().viewer();
     }
     void stopSlow(){
-        gameController.GetComponent<LineViewer>().setWatch(false);
-        gameController.GetComponent<LineViewer>().deSelector();
-        gameController.GetComponent<SlowMotion>().slowmo(false);
+        _gameController.GetComponent<LineViewer>().setWatch(false);
+        _gameController.GetComponent<LineViewer>().deSelector();
+        _gameController.GetComponent<SlowMotion>().slowmo(false);
     }
     void select(float aux){
-        if(timezone){
+        if(_timezone){
             int val = (int)Mathf.Round(aux);
-            gameController.GetComponent<LineViewer>().coinChanger(val);
+            _gameController.GetComponent<LineViewer>().coinChanger(val);
         }
     }
     void shoot(){
-        if (shootmode)
-            player.GetComponent<CoinThrowPosition>().coinPosition(x, y);
+        if (_shootmode)
+            _player.GetComponent<CoinThrowPosition>().coinPosition(_x, _y);
     }
-    void generateTrayectory(float x, float y){
-        if (gameController.GetComponent<LineRenderer>().enabled == false){
-            gameController.GetComponent<LineRenderer>().enabled = true;
+    void generateTrayectory(float _x, float _y){
+        if (_gameController.GetComponent<LineRenderer>().enabled == false){
+            _gameController.GetComponent<LineRenderer>().enabled = true;
         }
-        gameController.GetComponent<Trajectory>().SimulateTraectory(new Vector3(transform.position.x + x, transform.position.y + y, 0));
+        _gameController.GetComponent<Trajectory>().SimulateTraectory(new Vector3(transform.position.x + _x, transform.position.y + _y, 0));
     }
     void destroyTrayectory(){
-        shootmode = false;
-        gameController.GetComponent<LineRenderer>().enabled = false;;
+        _shootmode = false;
+        _gameController.GetComponent<LineRenderer>().enabled = false;;
     }
-    public float getX(){ return x; }
-    public float getY(){ return y; }
+    public float getX(){ return _x; }
+    public float getY(){ return _y; }
 }

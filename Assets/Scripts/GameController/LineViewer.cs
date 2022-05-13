@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class LineViewer : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private Material cyan;
-    private GameObject[] metal = new GameObject[]{};
-    private GameObject selected = null;
-    private bool watch = false;
+    [SerializeField] private Material _cyan;
+    [SerializeField] private GameObject _player;
+    private GameObject _selected = null;
+    private GameObject[] _metal = new GameObject[]{};
+    private bool _watch = false; 
     
     void Update(){
-        if (watch)
+        if (_watch)
             viewer();
     }
     public void setWatch(bool value){
-        watch = value;
+        _watch = value;
     }
     public void viewer(){
-        if (metal.Length < GameObject.FindGameObjectsWithTag("Coin").Length){
-            metal = GameObject.FindGameObjectsWithTag("Coin");
+        if (_metal.Length < GameObject.FindGameObjectsWithTag("Coin").Length){
+            _metal = GameObject.FindGameObjectsWithTag("Coin");
         }
-        if (metal.Length > 0){
-            foreach (GameObject m in metal){
+        if (_metal.Length > 0){
+            foreach (GameObject m in _metal){
                 LineRenderer line;
                 if(m.GetComponent<LineRenderer>()){
                     line = m.GetComponent<LineRenderer>();
@@ -30,19 +30,19 @@ public class LineViewer : MonoBehaviour
                 else{
                     line = m.AddComponent<LineRenderer>();
                 }  
-                line.SetPosition(0, player.transform.position);
+                line.SetPosition(0, _player.transform.position);
                 line.SetPosition(1, m.transform.position);
                 line.startWidth = 0.01f;
                 line.endWidth = 0.01f;
-                line.material = cyan;
+                line.material = _cyan;
             }
             sort();
-            if (selected == null)
-                select(metal[0]);
+            if (_selected == null)
+                select(_metal[0]);
         }
     }
     void select(GameObject go){
-        selected = go;
+        _selected = go;
         var outline = go.AddComponent<Outline>();
         outline.OutlineMode = Outline.Mode.OutlineVisible;
         outline.OutlineColor = Color.cyan;
@@ -55,22 +55,23 @@ public class LineViewer : MonoBehaviour
         }
         catch (MissingComponentException){ }
     }
-    public void deSelect(GameObject selected){
-        Destroy(selected.GetComponent<Outline>());
-        Destroy(selected.GetComponent<LineRenderer>());
+    public void deSelect(GameObject _selected){
+        Destroy(_selected.GetComponent<Outline>());
+        Destroy(_selected.GetComponent<LineRenderer>());
     }
     public void deSelector(){
-        selected = null;
-        foreach (GameObject m in metal){
+        _selected = null;
+        foreach (GameObject m in _metal){
             deSelect(m);
         }
+        _metal = new GameObject[]{};
     }
     public void coinChanger(int value){
-        if(metal.Length > 1){
-            deSelect(selected);
+        if(_metal.Length > 1){
+            deSelect(_selected);
             int id = 0;
-            for (int j = 0; j < metal.Length; j++) {
-                if (metal[j] == selected){
+            for (int j = 0; j < _metal.Length; j++) {
+                if (_metal[j] == _selected){
                     id = j;
                 }
             }
@@ -79,23 +80,23 @@ public class LineViewer : MonoBehaviour
             }
             else
                 id--; // -x
-            if(id < 0) id = metal.Length-1;
-            if(id >= metal.Length) id = 0;
+            if(id < 0) id = _metal.Length-1;
+            if(id >= _metal.Length) id = 0;
             // print(id);
-            select(metal[id]);
+            select(_metal[id]);
         }
     }
     void sort(){
         GameObject temp;
-        for (int j = 0; j <= metal.Length - 2; j++) {
-            for (int i = 0; i <= metal.Length - 2; i++) {
-                if (Vector3.Distance(player.transform.position, metal[i].transform.position) > Vector3.Distance(player.transform.position, metal[i +1].transform.position)){
-                    temp = metal[i + 1];
-                    metal[i + 1] = metal[i];
-                    metal[i] = temp;
+        for (int j = 0; j <= _metal.Length - 2; j++) {
+            for (int i = 0; i <= _metal.Length - 2; i++) {
+                if (Vector3.Distance(_player.transform.position, _metal[i].transform.position) > Vector3.Distance(_player.transform.position, _metal[i +1].transform.position)){
+                    temp = _metal[i + 1];
+                    _metal[i + 1] = _metal[i];
+                    _metal[i] = temp;
                 }
             }
         }
     }
-    public GameObject getSelected(){return selected;}
+    public GameObject getSelected(){return _selected;}
 }

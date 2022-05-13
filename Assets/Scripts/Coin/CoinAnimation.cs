@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class CoinAnimation : MonoBehaviour
 {
-    private Animator a;
-    private GameObject gameController;
+    private Animator _animator;
+    private GameObject _gameController;
 
     void Start()
     {
-        gameController = GameObject.Find("GameController");
-        a = GetComponent<Animator>();
+        _gameController = GameObject.Find("GameController");
+        _animator = GetComponent<Animator>();
     }
     void OnTriggerEnter(Collider other){        
         if (other.CompareTag("Floor") || other.CompareTag("Coin")){
-            try{a.SetBool("OnGround", true);}
+            try{_animator.SetBool("OnGround", true);}
             catch{}
 
-        } else if (other.CompareTag("Player") && transform.position.y > 1 || other.CompareTag("Destroy")){ // TODO: destruir moneda contacto player
-            // print("pep");
-            gameController.GetComponent<LineViewer>().deSelect(gameObject);
+        } else if (other.CompareTag("Player") && transform.position.y > 1 || other.CompareTag("Destroy")){ 
+            _gameController.GetComponent<LineViewer>().deSelector();
             Destroy(gameObject);
         }
-        // print(other.tag);
     }
     public bool ongroud(){
         if (Physics.Raycast(transform.position, Vector3.down, 0.5f))

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinThrow : MonoBehaviour
-{
-    private float x, y;
-    private int force = 150;
-    private GameObject player;
+{ 
+    private GameObject _player;
 
-    void Start()
-    {
+    void Start(){
         ignite();
     }
     public void ignite(){
-        player = GameObject.Find("Player");
-        x = player.GetComponent<InputController>().getX();
-        y = player.GetComponent<InputController>().getY();
+        float x, y;
+        int force = 150;
+        _player = GameObject.Find("Player");
+        
+        x = _player.GetComponent<InputController>().getX();
+        y = _player.GetComponent<InputController>().getY();
         x = x * force;
         y = y * force;
         GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, y * Time.deltaTime, 0, ForceMode.Impulse);

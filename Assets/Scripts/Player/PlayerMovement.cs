@@ -5,43 +5,41 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    private int speedUnitFrames = 0;
-    private int runDelayFrames = 30;
-    private int fallMultiplayer = 3;
-    private int brakeDelay = 20;
-    private int runSpeed = 550;
-    private int walkSpeed = 400;
-    public int jumpForce = 400;
-    public bool onwalljump = false;
-    public int direction = 0;
+    private int _speedUnitFrames = 0;
+    private int _runDelayFrames = 30;
+    private int _fallMultiplayer = 3;
+    private int _brakeDelay = 20;
+    private int _runSpeed = 550;
+    private int _walkSpeed = 400;
+    public int _jumpForce = 400;
+    public bool _onwalljump = false;
+    public int _direction = 0;
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update(){
-        // if (canjump == false && rb.velocity.y < 0) fall();
         ongroud();
-        onwall();
     }
-    public void accelerate(int direction){
-        print(rb.velocity.x);
-        if (rb.velocity.x < 15 && rb.velocity.x > -15){ // Medir esto
+    public void accelerate(int _direction){ //TODO: revisar landing accelerate
+        // print(rb.velocity.x);
+        if (rb.velocity.x < 15 && rb.velocity.x > -15){
             if (ongroud()){
-                if (speedUnitFrames <= runDelayFrames){
-                    move(walkSpeed, direction);
-                    speedUnitFrames++;
+                if (_speedUnitFrames <= _runDelayFrames){
+                    move(_walkSpeed, _direction);
+                    _speedUnitFrames++;
                 }
                 else
-                    move(runSpeed, direction);
+                    move(_runSpeed, _direction);
             }
             else
-                move(walkSpeed, direction);
+                move(_walkSpeed, _direction);
         }
     }
     public void decelerate(){
-        if (transform.position.y > 1 && ongroud()){
-            if (speedUnitFrames == (runDelayFrames + 1)) speedUnitFrames = brakeDelay;
-            if (speedUnitFrames > 0){
-                speedUnitFrames--;
+        if (ongroud()){
+            if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
+            if (_speedUnitFrames > 0){
+                _speedUnitFrames--;
             }
             else{
                 Vector3 eraseX = rb.velocity;
@@ -50,40 +48,40 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    void move(int speed, int direction){
+    void move(int speed, int _direction){
         // print("entra");
-        rb.AddForce(Vector3.right * direction * speed * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void jump(){
         if (ongroud()){
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
         else if (onwall()) walljump();
     }
     void fall(){
-        rb.AddForce(Vector3.up * (Physics.gravity.y * fallMultiplayer), ForceMode.Force);
+        rb.AddForce(Vector3.up * (Physics.gravity.y * _fallMultiplayer), ForceMode.Force);
     }
-    void walljump(){
-        rb.AddForce(walkSpeed * -direction, jumpForce, 0, ForceMode.Impulse);
-        // canwalljump = false;
-        onwalljump = true;
-        rotate(-direction);
+    void walljump(){ // TODO: Bug colisiones y mantener momento
+        // print(rb.velocity.x);
+        rb.AddForce(_walkSpeed * -_direction, _jumpForce, 0, ForceMode.Impulse);
+        _onwalljump = true;
+        rotate(-_direction);
     }
     public void rotate(int dir){
-        if (direction != dir){
-            if (direction != 0){
+        if (_direction != dir){
+            if (_direction != 0){
                 transform.Rotate(180, 0, 0, Space.Self);
-                direction = -direction;
+                _direction = -_direction;
             }
             else
-                direction = dir;
+                _direction = dir;
         }
-        else if (onwalljump)
-            direction = -direction; 
+        else if (_onwalljump)
+            _direction = -_direction; 
     }
     bool ongroud(){
         if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, 0.5f) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
-            onwalljump = false;
+            _onwalljump = false;
             // Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, 0.5f);
             // Debug.DrawLine(transform.position - (Vector3.right / 2), Vector3.down, Color.red, 0.5f);
             return true;
@@ -92,13 +90,12 @@ public class PlayerMovement : MonoBehaviour
             return false;
     }
     bool onwall(){
-        if (Physics.Raycast(transform.position, transform.right * direction, 0.5f) && !ongroud()){
+        if (Physics.Raycast(transform.position, transform.right * _direction, 0.5f) && !ongroud())
             return true;
-        }
         else
             return false;
     }
-    public bool getOnWalljump() {return onwalljump;}
-    public int getSpeedUnitFrames() {return speedUnitFrames;}
-    public int getRunDelayFrames() {return runDelayFrames;}
+    public bool getOnWalljump() {return _onwalljump;}
+    public int getSpeedUnitFrames() {return _speedUnitFrames;}
+    public int getRunDelayFrames() {return _runDelayFrames;}
 }
