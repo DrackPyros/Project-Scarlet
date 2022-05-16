@@ -7,6 +7,8 @@ public class Magnetism : MonoBehaviour
     private GameObject _player, _coin;
     private Rigidbody _playerRb, _coinRb;
     private float _attract = 0, _repel = 0;
+    // private const int _multiply = 0;
+    private const int _frame = 60;
     void Start(){
         _player = GameObject.Find("Player");
         _playerRb = _player.GetComponent<Rigidbody>();
@@ -26,33 +28,29 @@ public class Magnetism : MonoBehaviour
         if (_coin != null){
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
-                // print(force);
                 if(_coin.GetComponent<CoinAnimation>().ongroud()){
-                    // print("entra");
-                    // _playerRb.AddForce(-_coin.transform.position, ForceMode.Force);
-                    // _player.transform.position = Vector3.MoveTowards(_player.transform.position, _coin.transform.position, force * _playerRb.mass * Time.deltaTime);
-                    _player.GetComponent<Rigidbody>().AddForce(((Vector3.Normalize(_player.transform.position - _coin.transform.position)* force)/efectArea), ForceMode.Impulse);
-                    // print(((Vector3.Normalize(_player.transform.position - _coin.transform.position)* force)/efectArea));
+                    _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime, ForceMode.Impulse);
+                    // print(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime);
                 } else{
-                    // print(2);
-                    _player.GetComponent<Rigidbody>().AddForce(((Vector3.Normalize(_player.transform.position - _coin.transform.position)* force)/efectArea), ForceMode.Impulse);
-                    _coin.GetComponent<Rigidbody>().AddForce(((Vector3.Normalize(_coin.transform.position - _player.transform.position)* force)/efectArea), ForceMode.Impulse);
+                    _player.GetComponent<Rigidbody>().AddForce(((_player.transform.position - _coin.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
+                    _coin.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
                 }
-                // if choca contra el suelo
-                // push recto
             }
         }
     }
-    public void pull(float force){ //TODO: Nivelar
+    public void pull(float force){ //TODO: Inversa para objetos grandes
         _attract = force;
         setSelectedCoin();
         if (_coin != null){
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
-                // print(force);
-                _coin.GetComponent<Rigidbody>().AddForce(((Vector3.Normalize(_player.transform.position - _coin.transform.position)* force)/efectArea), ForceMode.Impulse);
-                _player.GetComponent<Rigidbody>().AddForce(((Vector3.Normalize(_coin.transform.position - _player.transform.position)* force)/efectArea), ForceMode.Impulse);
-                // print(((Vector3.Normalize(_coin.transform.position - _player.transform.position)* force)/efectArea));
+                if (_coin.transform.position != _player.transform.position){
+                    _coin.GetComponent<Rigidbody>().AddForce(((_player.transform.position - _coin.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
+                    _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
+                    // print(((Vector3.Normalize(_coin.transform.position - _player.transform.position)* force)/efectArea));
+                }
+                else
+                    _coinRb.velocity = Vector3.zero;
             }
         }
     }

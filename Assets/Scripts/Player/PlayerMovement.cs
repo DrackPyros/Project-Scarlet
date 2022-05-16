@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
+    private const int _runDelayFrames = 30;
+    private const int _fallMultiplayer = 3;
+    private const int _brakeDelay = 20;
+    private const int _runSpeed = 550;
+    private const int _walkSpeed = 400;
+    public const int _jumpForce = 400;
     private int _speedUnitFrames = 0;
-    private int _runDelayFrames = 30;
-    private int _fallMultiplayer = 3;
-    private int _brakeDelay = 20;
-    private int _runSpeed = 550;
-    private int _walkSpeed = 400;
-    public int _jumpForce = 400;
     public bool _onwalljump = false;
     public int _direction = 0;
     void Start(){
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     void move(int speed, int _direction){
-        // print("entra");
+        // print(Vector3.right * _direction * speed * Time.deltaTime); //Poca fuerza por time.deltatime en slowmotion
         rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void jump(){

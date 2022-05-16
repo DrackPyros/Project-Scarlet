@@ -26,9 +26,10 @@ public class InputController : MonoBehaviour
 
         _controls.InGame.CoinSelector.performed += contx => select(contx.ReadValue<float>());
 
+        _controls.InGame.VialSelector.performed += contx => _gameController.GetComponent<MetalSelector>().VialSelector(contx.ReadValue<float>());
+
         _controls.InGame.Repel.performed += ctx => _gameController.GetComponent<Magnetism>().push(-(ctx.ReadValue<float>()));
         _controls.InGame.Attract.performed += ctx => _gameController.GetComponent<Magnetism>().pull(ctx.ReadValue<float>());
-
         _controls.InGame.Repel.canceled += _ => _gameController.GetComponent<Magnetism>().nullForce(false);
         _controls.InGame.Attract.canceled += _ => _gameController.GetComponent<Magnetism>().nullForce(true);
 
@@ -36,6 +37,7 @@ public class InputController : MonoBehaviour
         _controls.InGame.ShootMode.canceled += _ => destroyTrayectory();
 
         _controls.InGame.Shoot.performed += _ => shoot();
+        // _controls.InGame.Menu.performed += _ => _controls.SwitchCurrentActionMap("Menu");
     }
     void Update(){
         if(!_controls.InGame.Time.IsPressed()){

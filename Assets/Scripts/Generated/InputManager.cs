@@ -509,7 +509,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""65ce8c04-eff9-446f-8a49-e4e9673147d4"",
-                    ""path"": ""*/{Forward}"",
+                    ""path"": ""*/{Submit}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
