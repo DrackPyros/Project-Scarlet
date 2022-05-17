@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Update(){
         ongroud();
     }
-    public void accelerate(int _direction){ //TODO: revisar landing accelerate
+    public void accelerate(int _direction){ //TODO: Acelerar despues de caer es muy lento
         // print(rb.velocity.x);
         if (rb.velocity.x < 15 && rb.velocity.x > -15){
             if (ongroud()){
@@ -49,8 +49,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     void move(int speed, int _direction){
-        // print(Vector3.right * _direction * speed * Time.deltaTime); //Poca fuerza por time.deltatime en slowmotion
-        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse);
+        // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
+        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse); 
     }
     public void jump(){
         if (ongroud()){

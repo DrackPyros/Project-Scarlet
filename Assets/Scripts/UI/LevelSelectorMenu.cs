@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class LevelSelectorMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // TODO: Obtener niveles, mostrarlos y cargar el seleccionado
 }

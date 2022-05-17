@@ -53,7 +53,7 @@ public class InputController : MonoBehaviour
     }
     private void OnEnable(){_controls.Enable();}
     private void OnDisable(){_controls.Disable();}
-    void move(Vector2 aux){ //TODO: revisar mover time
+    void move(Vector2 aux){
         if(!_shootmode){
             _value = aux;
             int val = (int)Mathf.Round(aux.x);

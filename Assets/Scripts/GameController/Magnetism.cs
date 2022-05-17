@@ -28,9 +28,9 @@ public class Magnetism : MonoBehaviour
         if (_coin != null){
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
-                if(_coin.GetComponent<CoinAnimation>().ongroud()){
+                if(_coin.GetComponent<CoinAnimation>().ongroud()){ // Si la moneda toca el suelo, la pelota tiene que obtener impulso como si fuera la moneda
                     _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime, ForceMode.Impulse);
-                    // print(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime);
+                    print(((_coin.transform.position - _player.transform.position)* (force))* _frame * Time.deltaTime); // La fuerza multiplicada por la division da un resultado menor
                 } else{
                     _player.GetComponent<Rigidbody>().AddForce(((_player.transform.position - _coin.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
                     _coin.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
@@ -38,7 +38,7 @@ public class Magnetism : MonoBehaviour
             }
         }
     }
-    public void pull(float force){ //TODO: Inversa para objetos grandes
+    public void pull(float force){ //TODO: Comprobar si la fuerza es suficiente como para simular un gancho
         _attract = force;
         setSelectedCoin();
         if (_coin != null){
