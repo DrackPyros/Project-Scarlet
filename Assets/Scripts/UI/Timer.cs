@@ -29,4 +29,7 @@ public class Timer : MonoBehaviour
         _savedTime = _timerString;
         // print(_savedTime);
     }
+    public string getSavedTime(){
+        return _savedTime;
+    }
 }

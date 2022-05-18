@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class RankingView : MonoBehaviour
 {
+    [SerializeField] private TextAsset _file;
     private Transform _entryContainer;
     private Transform _entryTemplate;
-    [SerializeField] private TextAsset file;
-    private List<Entry> _highscoreEntryList;
     private List<Transform> _highscoreTrasnformList;
+    private List<Entry> _highscoreEntryList;
+
+    [System.Serializable]
+    public class Entry{
+        public string name;
+        public string score;
+    }
+    [System.Serializable]
+    public class Players{
+        public Entry[] players;
+    }
+    public Players _highscoreRaw = new Players();
     void Start(){
-        print(file.text);
+        print(_file.text);
+        _highscoreRaw = JsonUtility.FromJson<Players>(_file.text);
         _entryContainer = transform.Find("HighscoreEntryContainer");
         _entryTemplate = _entryContainer.Find("HighscoreEntryTemplate");
 
-        _highscoreEntryList = FillList(file);
+        _highscoreEntryList = FillList(_highscoreRaw);
         _highscoreTrasnformList = new List<Transform>();
 
         foreach(Entry entry in _highscoreEntryList){
@@ -32,22 +44,16 @@ public class RankingView : MonoBehaviour
         entryTransform.Find("ScoreTxt").GetComponent<TMPro.TextMeshProUGUI>().text = entry.score;
         transformList.Add(entryTransform);
     }
-    List<Entry> FillList(TextAsset file){
-        Entries aux = JsonUtility.FromJson<Entries>(file.text);
-        
-        foreach (Entry e in aux.entries){
-            print(e.name+ " - "+ e.score);
+    public List<Entry> FillList(Players raw){   
+        List<Entry> list = new List<Entry>();    
+        foreach (Entry e in raw.players){
+            // print(e.name+ " - "+ e.score);
+            list.Add(e);
         }
-        
-
-        return null;
+        list.Sort(SortByScore);
+        return list;
     }
-    [System.Serializable]
-    private class Entry{
-        public string name;
-        public string score;
-    }
-    private class Entries{
-        public Entry[] entries;
+    static int SortByScore(Entry p1, Entry p2){
+        return p1.score.CompareTo(p2.score);
     }
 }

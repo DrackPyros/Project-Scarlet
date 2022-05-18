@@ -79,6 +79,10 @@ public class PlayerMovement : MonoBehaviour
         else if (_onwalljump)
             _direction = -_direction; 
     }
+    public void stop(){
+        rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+    }
     bool ongroud(){
         if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, 0.5f) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
             _onwalljump = false;
