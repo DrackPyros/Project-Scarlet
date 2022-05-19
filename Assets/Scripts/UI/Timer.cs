@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
-{
+public class Timer : MonoBehaviour{
     private float _startTime;
     private bool _continue = true;
     private string _savedTime;

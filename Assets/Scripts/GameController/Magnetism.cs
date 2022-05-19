@@ -1,34 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Magnetism : MonoBehaviour
-{
+public class Magnetism : MonoBehaviour{
     private GameObject _player, _coin;
     private Rigidbody _playerRb, _coinRb;
     private float _attract = 0, _repel = 0;
-    // private const int _multiply = 0;
     private const int _frame = 60;
+
     void Start(){
         _player = GameObject.Find("Player");
         _playerRb = _player.GetComponent<Rigidbody>();
     }
     void Update(){
         if(_attract > 0){
-            pull(_attract);
+            Pull(_attract);
         }
         else if(_repel < 0){
-            push(_repel);
+            Push(_repel);
         }
         // print(_playerRb.velocity.y);
     }
-    public void push(float force){ //TODO: Arreglar
+    public void Push(float force){ //TODO: Arreglar
         _repel = force;
-        setSelectedCoin();
+        SetSelectedCoin();
         if (_coin != null){
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
-                if(_coin.GetComponent<CoinAnimation>().ongroud()){ // Si la moneda toca el suelo, la pelota tiene que obtener impulso como si fuera la moneda
+                if(_coin.GetComponent<CoinAnimation>().Ongroud()){ // Si la moneda toca el suelo, la pelota tiene que obtener impulso como si fuera la moneda
                     _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime, ForceMode.Impulse);
                     print(((_coin.transform.position - _player.transform.position)* (force))* _frame * Time.deltaTime); // La fuerza multiplicada por la division da un resultado menor
                 } else{
@@ -38,9 +35,9 @@ public class Magnetism : MonoBehaviour
             }
         }
     }
-    public void pull(float force){ //TODO: Comprobar si la fuerza es suficiente como para simular un gancho
+    public void Pull(float force){ //TODO: Comprobar si la fuerza es suficiente como para simular un gancho
         _attract = force;
-        setSelectedCoin();
+        SetSelectedCoin();
         if (_coin != null){
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
@@ -54,14 +51,14 @@ public class Magnetism : MonoBehaviour
             }
         }
     }
-    void setSelectedCoin(){
+    void SetSelectedCoin(){
         try{
-            _coin = gameObject.GetComponent<LineViewer>().getSelected();
+            _coin = gameObject.GetComponent<LineViewer>().GetSelected();
             _coinRb = _coin.GetComponent<Rigidbody>();
         }
         catch {}
     }
-    public void nullForce(bool opcion){
+    public void NullForce(bool opcion){
         _attract = opcion ? 0 : _attract;
         _repel = opcion ? _repel : 0;
     }

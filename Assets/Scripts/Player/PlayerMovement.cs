@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour{
     private Rigidbody rb;
     private const int _runDelayFrames = 30;
     private const int _fallMultiplayer = 3;
@@ -14,29 +11,30 @@ public class PlayerMovement : MonoBehaviour
     private int _speedUnitFrames = 0;
     public bool _onwalljump = false;
     public int _direction = 0;
+    
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update(){
-        ongroud();
+        Ongroud();
     }
-    public void accelerate(int _direction){ //TODO: Acelerar despues de caer es muy lento
+    public void Accelerate(int _direction){ //TODO: Acelerar despues de caer es muy lento
         // print(rb.velocity.x);
         if (rb.velocity.x < 15 && rb.velocity.x > -15){
-            if (ongroud()){
+            if (Ongroud()){
                 if (_speedUnitFrames <= _runDelayFrames){
-                    move(_walkSpeed, _direction);
+                    Move(_walkSpeed, _direction);
                     _speedUnitFrames++;
                 }
                 else
-                    move(_runSpeed, _direction);
+                    Move(_runSpeed, _direction);
             }
             else
-                move(_walkSpeed, _direction);
+                Move(_walkSpeed, _direction);
         }
     }
-    public void decelerate(){
-        if (ongroud()){
+    public void Decelerate(){
+        if (Ongroud()){
             if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
             if (_speedUnitFrames > 0){
                 _speedUnitFrames--;
@@ -48,26 +46,26 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    void move(int speed, int _direction){
+    void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
         rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse); 
     }
-    public void jump(){
-        if (ongroud()){
+    public void Jump(){
+        if (Ongroud()){
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
-        else if (onwall()) walljump();
+        else if (Onwall()) Walljump();
     }
-    void fall(){
+    void Fall(){
         rb.AddForce(Vector3.up * (Physics.gravity.y * _fallMultiplayer), ForceMode.Force);
     }
-    void walljump(){ // TODO: Bug colisiones y mantener momento
+    void Walljump(){ // TODO: Bug colisiones y mantener momento
         // print(rb.velocity.x);
         rb.AddForce(_walkSpeed * -_direction, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
-        rotate(-_direction);
+        Rotate(-_direction);
     }
-    public void rotate(int dir){
+    public void Rotate(int dir){
         if (_direction != dir){
             if (_direction != 0){
                 transform.Rotate(180, 0, 0, Space.Self);
@@ -79,11 +77,11 @@ public class PlayerMovement : MonoBehaviour
         else if (_onwalljump)
             _direction = -_direction; 
     }
-    public void stop(){
+    public void Stop(){
         rb.velocity = Vector3.zero;
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
-    bool ongroud(){
+    bool Ongroud(){
         if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, 0.5f) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
             _onwalljump = false;
             // Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, 0.5f);
@@ -93,13 +91,13 @@ public class PlayerMovement : MonoBehaviour
         else
             return false;
     }
-    bool onwall(){
-        if (Physics.Raycast(transform.position, transform.right * _direction, 0.5f) && !ongroud())
+    bool Onwall(){
+        if (Physics.Raycast(transform.position, transform.right * _direction, 0.5f) && !Ongroud())
             return true;
         else
             return false;
     }
-    public bool getOnWalljump() {return _onwalljump;}
-    public int getSpeedUnitFrames() {return _speedUnitFrames;}
-    public int getRunDelayFrames() {return _runDelayFrames;}
+    public bool GetOnWalljump() {return _onwalljump;}
+    public int GetSpeedUnitFrames() {return _speedUnitFrames;}
+    public int GetRunDelayFrames() {return _runDelayFrames;}
 }

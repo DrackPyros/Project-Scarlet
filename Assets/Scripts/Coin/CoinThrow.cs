@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinThrow : MonoBehaviour
-{ 
+public class CoinThrow : MonoBehaviour{ 
     private GameObject _player;
 
     void Start(){
-        ignite();
+        Ignite();
     }
-    public void ignite(){
+    public void Ignite(){
         float x, y;
         int force = 150;
         _player = GameObject.Find("Player");
@@ -20,6 +17,5 @@ public class CoinThrow : MonoBehaviour
         y = y * force;
         GetComponent<Rigidbody>().AddForce(x * Time.deltaTime, y * Time.deltaTime, 0, ForceMode.Impulse);
         // Destroy(gameObject, 5);
-    
     }
 }

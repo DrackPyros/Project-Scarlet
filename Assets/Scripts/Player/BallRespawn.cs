@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BallRespawn : MonoBehaviour
-{
+public class BallRespawn : MonoBehaviour{
     void OnTriggerEnter(Collider other){        
         if (other.CompareTag("Destroy")){
             transform.position = new Vector3(0, 1, 0);

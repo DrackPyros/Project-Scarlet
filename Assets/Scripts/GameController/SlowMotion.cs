@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowMotion : MonoBehaviour
-{
-    public void slowmo(bool input)
-    {
+public static class SlowMotion{
+    public static void Slowmo(bool input){
         if(input){
             Time.timeScale = 0.5f;
         } else

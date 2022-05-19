@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LineViewer : MonoBehaviour
-{
+public class LineViewer : MonoBehaviour{
     [SerializeField] private Material _cyan;
     [SerializeField] private GameObject _player;
     private GameObject _selected = null;
@@ -12,12 +9,12 @@ public class LineViewer : MonoBehaviour
     
     void Update(){
         if (_watch)
-            viewer();
+            Viewer();
     }
-    public void setWatch(bool value){
+    public void SetWatch(bool value){
         _watch = value;
     }
-    public void viewer(){
+    public void Viewer(){
         if (_metal.Length < GameObject.FindGameObjectsWithTag("Coin").Length){
             _metal = GameObject.FindGameObjectsWithTag("Coin");
         }
@@ -36,12 +33,12 @@ public class LineViewer : MonoBehaviour
                 line.endWidth = 0.01f;
                 line.material = _cyan;
             }
-            sort();
+            Sort();
             if (_selected == null)
-                select(_metal[0]);
+                Select(_metal[0]);
         }
     }
-    void select(GameObject go){
+    void Select(GameObject go){
         _selected = go;
         var outline = go.AddComponent<Outline>();
         outline.OutlineMode = Outline.Mode.OutlineVisible;
@@ -55,20 +52,20 @@ public class LineViewer : MonoBehaviour
         }
         catch (MissingComponentException){ }
     }
-    public void deSelect(GameObject _selected){
+    public void DeSelect(GameObject _selected){
         Destroy(_selected.GetComponent<Outline>());
         Destroy(_selected.GetComponent<LineRenderer>());
     }
-    public void deSelector(){
+    public void DeSelector(){
         _selected = null;
         foreach (GameObject m in _metal){
-            deSelect(m);
+            DeSelect(m);
         }
         _metal = new GameObject[]{};
     }
-    public void coinChanger(int value){
+    public void CoinChanger(int value){
         if(_metal.Length > 1){
-            deSelect(_selected);
+            DeSelect(_selected);
             int id = 0;
             for (int j = 0; j < _metal.Length; j++) {
                 if (_metal[j] == _selected){
@@ -83,10 +80,10 @@ public class LineViewer : MonoBehaviour
             if(id < 0) id = _metal.Length-1;
             if(id >= _metal.Length) id = 0;
             // print(id);
-            select(_metal[id]);
+            Select(_metal[id]);
         }
     }
-    void sort(){
+    void Sort(){
         GameObject temp;
         for (int j = 0; j <= _metal.Length - 2; j++) {
             for (int i = 0; i <= _metal.Length - 2; i++) {
@@ -98,5 +95,5 @@ public class LineViewer : MonoBehaviour
             }
         }
     }
-    public GameObject getSelected(){return _selected;}
+    public GameObject GetSelected(){return _selected;}
 }

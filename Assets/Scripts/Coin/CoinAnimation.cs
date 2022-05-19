@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinAnimation : MonoBehaviour
-{
+public class CoinAnimation : MonoBehaviour{
     private Animator _animator;
     private GameObject _gameController;
-
-    void Start()
-    {
+    
+    void Start(){
         _gameController = GameObject.Find("GameController");
         _animator = GetComponent<Animator>();
     }
@@ -18,11 +14,11 @@ public class CoinAnimation : MonoBehaviour
             catch{}
 
         } else if (other.CompareTag("Player") && transform.position.y > 1 || other.CompareTag("Destroy")){ 
-            _gameController.GetComponent<LineViewer>().deSelector();
+            _gameController.GetComponent<LineViewer>().DeSelector();
             Destroy(gameObject);
         }
     }
-    public bool ongroud(){
+    public bool Ongroud(){
         if (Physics.Raycast(transform.position, Vector3.down, 0.5f))
             return true;
         else

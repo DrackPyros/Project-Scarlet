@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Trajectory : MonoBehaviour
-{
+public class Trajectory : MonoBehaviour{
     [SerializeField] private Transform _obstaclesParent;
     [SerializeField] private LineRenderer _line;
     [SerializeField] private int _maxFrames = 100;
@@ -12,8 +9,7 @@ public class Trajectory : MonoBehaviour
     private Scene _simulationScene;
     private PhysicsScene _physicsScene;
 
-    void Start()
-    {
+    void Start(){
         CreatePhysicsScene();
     }
     void CreatePhysicsScene(){
@@ -28,12 +24,11 @@ public class Trajectory : MonoBehaviour
             }
         }
     }
-    
     public void SimulateTraectory(Vector3 pos){ // closer trayectory start
         var ghostObj = Instantiate(_coinPrefab, pos, Quaternion.identity);
         ghostObj.tag = "Untagged";
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
-        ghostObj.GetComponent<CoinThrow>().ignite();
+        ghostObj.GetComponent<CoinThrow>().Ignite();
 
         _line.positionCount = _maxFrames;
 
