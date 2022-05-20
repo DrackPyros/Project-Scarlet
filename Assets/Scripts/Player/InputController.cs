@@ -3,6 +3,7 @@ using UnityEngine;
 public class InputController : MonoBehaviour{
     private InputManager _controls;
     private GameObject _player, _gameController;
+    public GameObject _menu;
     private Vector2 _value;
     private bool _timezone = false;
     private bool _shootmode = false;
@@ -34,7 +35,7 @@ public class InputController : MonoBehaviour{
         _controls.InGame.ShootMode.canceled += _ => DestroyTrayectory();
 
         _controls.InGame.Shoot.performed += _ => Shoot();
-        // _controls.InGame.Menu.performed += _ => _controls.SwitchCurrentActionMap("Menu");
+        _controls.InGame.Menu.performed += _ => Menu();
     }
     void Update(){
         if(!_controls.InGame.Time.IsPressed()){
@@ -94,6 +95,12 @@ public class InputController : MonoBehaviour{
     void DestroyTrayectory(){
         _shootmode = false;
         _gameController.GetComponent<LineRenderer>().enabled = false;;
+    }
+    void Menu(){
+        _menu.SetActive(true);
+
+        // _controls.SwitchCurrentActionMap("Menu")
+        // _controls.
     }
     public float getX(){ return _x; }
     public float getY(){ return _y; }

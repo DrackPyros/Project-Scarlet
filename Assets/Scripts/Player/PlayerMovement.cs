@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     public void Decelerate(){
         if (Ongroud()){
+            // print("pep");
             if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
             if (_speedUnitFrames > 0){
                 _speedUnitFrames--;
