@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 
 public class LevelSelectorMenu : MonoBehaviour{
-    // TODO: Obtener niveles, mostrarlos y cargar el seleccionado
     public class Level{
         public string title;
         public Sprite img;
@@ -20,6 +21,7 @@ public class LevelSelectorMenu : MonoBehaviour{
     private Transform _levelTemplate;
     private List<Transform> _levelTrasnformList;
     private List<Level> _levelList;
+    private bool _selected = false;
     
     
     void Start(){ 
@@ -33,6 +35,12 @@ public class LevelSelectorMenu : MonoBehaviour{
             CreateEntry(lvl, _levelContainer, _levelTrasnformList);
         }
     }
+    void OnEnable(){
+        if (_selected){
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(transform.Find("BackButton").gameObject);
+        }
+    }
     void CreateEntry(Level lvl, Transform container, List<Transform> transformList){
         float padding = 100f;
         Transform entryTransform = Instantiate(_levelTemplate, container);
@@ -44,6 +52,11 @@ public class LevelSelectorMenu : MonoBehaviour{
         entryTransform.Find("LevelTitle").GetComponent<TMPro.TextMeshProUGUI>().text = lvl.title;
         entryTransform.Find("SelectLevel").GetComponent<Button>().onClick.AddListener(() => LoadScene(lvl.id));
         transformList.Add(entryTransform);
+        if (!_selected){
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(entryTransform.GetChild(2).gameObject);
+            _selected = !_selected;
+        }
     }
     public List<Level> LoadLevelList(){
         List<Level> list = new List<Level>();
@@ -60,4 +73,5 @@ public class LevelSelectorMenu : MonoBehaviour{
     public void LoadScene(int id){
         SceneManager.LoadScene(id);
     }
+    // void OnDisable(){_selected = false;}
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RankingView : MonoBehaviour{
     
@@ -20,6 +21,9 @@ public class RankingView : MonoBehaviour{
             CreateEntry(entry, _entryContainer, _highscoreTrasnformList);
         }
     }
+    void OnEnable(){
+        SelectFirstItem();
+    }
     void CreateEntry(Entry entry, Transform container, List<Transform> transformList){
         float altura = 22f;
         Transform entryTransform = Instantiate(_entryTemplate, container);
@@ -30,5 +34,9 @@ public class RankingView : MonoBehaviour{
         entryTransform.Find("InitialsTxt").GetComponent<TMPro.TextMeshProUGUI>().text = entry.name;
         entryTransform.Find("ScoreTxt").GetComponent<TMPro.TextMeshProUGUI>().text = entry.score;
         transformList.Add(entryTransform);
+    }
+    public void SelectFirstItem(){
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(transform.Find("BackButton").gameObject);
     }
 }

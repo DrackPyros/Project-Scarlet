@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour{
     private InputManager _controls;
@@ -36,6 +37,8 @@ public class InputController : MonoBehaviour{
 
         _controls.InGame.Shoot.performed += _ => Shoot();
         _controls.InGame.Menu.performed += _ => Menu();
+
+        // _controls.Menu.Back.performed += _ =>
     }
     void Update(){
         if(!_controls.InGame.Time.IsPressed()){
@@ -98,9 +101,19 @@ public class InputController : MonoBehaviour{
     }
     void Menu(){
         _menu.SetActive(true);
-
-        // _controls.SwitchCurrentActionMap("Menu")
-        // _controls.
+        ChangeControls(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(_menu.transform.Find("Home").gameObject);
+    }
+    void ChangeControls(bool menu){
+        if (menu){
+            _controls.InGame.Disable();
+            _controls.Menu.Enable();
+        }
+        else{
+            _controls.Menu.Disable();
+            _controls.InGame.Enable();
+        }
     }
     public float getX(){ return _x; }
     public float getY(){ return _y; }
