@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour{
@@ -38,7 +39,7 @@ public class InputController : MonoBehaviour{
         _controls.InGame.Shoot.performed += _ => Shoot();
         _controls.InGame.Menu.performed += _ => Menu();
 
-        // _controls.Menu.Back.performed += _ =>
+        // _controls.Menu.Back.performed += _ => BackButton();
     }
     void Update(){
         if(!_controls.InGame.Time.IsPressed()){
@@ -114,6 +115,9 @@ public class InputController : MonoBehaviour{
             _controls.Menu.Disable();
             _controls.InGame.Enable();
         }
+    }
+    void BackButton(){
+        // transform.Find("BackButton").GetComponent<Button>().Invoke();
     }
     public float getX(){ return _x; }
     public float getY(){ return _y; }
