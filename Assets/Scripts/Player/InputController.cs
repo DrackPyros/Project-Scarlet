@@ -37,8 +37,9 @@ public class InputController : MonoBehaviour{
         _controls.InGame.ShootMode.canceled += _ => DestroyTrayectory();
 
         _controls.InGame.Shoot.performed += _ => Shoot();
-        _controls.InGame.Menu.performed += _ => Menu();
+        _controls.InGame.Menu.performed += _ => Menu(true);
 
+        _controls.Menu.Menu.performed += _ => Menu(false);
         // _controls.Menu.Back.performed += _ => BackButton();
     }
     void Update(){
@@ -100,11 +101,13 @@ public class InputController : MonoBehaviour{
         _shootmode = false;
         _gameController.GetComponent<LineRenderer>().enabled = false;;
     }
-    void Menu(){
-        _menu.SetActive(true);
-        ChangeControls(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(_menu.transform.Find("Home").gameObject);
+    void Menu(bool active){
+        _menu.SetActive(active);
+        ChangeControls(active);
+        if (active){
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(_menu.transform.Find("Home").gameObject);
+        }
     }
     void ChangeControls(bool menu){
         if (menu){

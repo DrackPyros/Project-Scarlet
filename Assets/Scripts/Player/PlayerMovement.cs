@@ -19,8 +19,11 @@ public class PlayerMovement : MonoBehaviour{
         Ongroud();
     }
     public void Accelerate(int _direction){ //TODO: Acelerar despues de caer es muy lento
-        // print(rb.velocity.x);
         if (rb.velocity.x < 15 && rb.velocity.x > -15){
+            if(_onwalljump){ //Landing aceleration
+                for(int i = 0; i< 2; i++)
+                    Move(_runSpeed, _direction);
+            }
             if (Ongroud()){
                 if (_speedUnitFrames <= _runDelayFrames){
                     Move(_walkSpeed, _direction);
@@ -30,12 +33,11 @@ public class PlayerMovement : MonoBehaviour{
                     Move(_runSpeed, _direction);
             }
             else
-                Move(_walkSpeed, _direction);
+                Move(_walkSpeed/2 , _direction);
         }
     }
     public void Decelerate(){
         if (Ongroud()){
-            // print("pep");
             if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
             if (_speedUnitFrames > 0){
                 _speedUnitFrames--;
@@ -61,8 +63,7 @@ public class PlayerMovement : MonoBehaviour{
         rb.AddForce(Vector3.up * (Physics.gravity.y * _fallMultiplayer), ForceMode.Force);
     }
     void Walljump(){ // TODO: Bug colisiones y mantener momento
-        // print(rb.velocity.x);
-        rb.AddForce(_walkSpeed * -_direction, _jumpForce, 0, ForceMode.Impulse);
+        rb.AddForce((_walkSpeed * -_direction)* 1.5f, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
         Rotate(-_direction);
     }

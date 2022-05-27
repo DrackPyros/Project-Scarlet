@@ -10,16 +10,8 @@ public class RankingView : MonoBehaviour{
     private List<Entry> _highscoreEntryList;
     
     
-    void Start(){ 
-        _entryContainer = transform.Find("HighscoreEntryContainer");
-        _entryTemplate = _entryContainer.Find("HighscoreEntryTemplate");
-
-        _highscoreEntryList = FileUser.Load();
-        _highscoreTrasnformList = new List<Transform>();
-
-        foreach(Entry entry in _highscoreEntryList){
-            CreateEntry(entry, _entryContainer, _highscoreTrasnformList);
-        }
+    void Start(){ //TODO: Cambiar entre hojas de ranking
+        ChangePage(1);
     }
     void OnEnable(){
         SelectFirstItem();
@@ -38,5 +30,23 @@ public class RankingView : MonoBehaviour{
     public void SelectFirstItem(){
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(transform.Find("BackButton").gameObject);
+    }
+    public void ChangePage(int page){
+        _entryContainer = transform.Find("HighscoreEntryContainer");
+        _entryTemplate = _entryContainer.Find("HighscoreEntryTemplate");
+        DeleteContent();
+
+        _highscoreEntryList = FileUser.Load(page);
+        _highscoreTrasnformList = new List<Transform>();
+
+        foreach(Entry entry in _highscoreEntryList){
+            CreateEntry(entry, _entryContainer, _highscoreTrasnformList);
+        }
+    }
+    void DeleteContent(){
+        GameObject[] transformList = GameObject.FindGameObjectsWithTag("Template");
+        for(int i = 1; i < transformList.Length; i++){
+            Destroy(transformList[i]);
+        }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Metalic
   - Destroy
+  - Template
   layers:
   - Default
   - TransparentFX

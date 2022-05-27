@@ -503,6 +503,15 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""df2c8435-1b61-4b3d-b21f-ca0d08372004"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -692,6 +701,28 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a8f7787-b57d-4697-ba72-2c2ed3fb8c30"",
+                    ""path"": ""*/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d09e8991-4e40-417e-8fb0-9d19e4a00f6c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -738,6 +769,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         m_Menu_Accept = m_Menu.FindAction("Accept", throwIfNotFound: true);
         m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
         m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
+        m_Menu_Menu = m_Menu.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -905,6 +937,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menu_Accept;
     private readonly InputAction m_Menu_Back;
     private readonly InputAction m_Menu_Navigate;
+    private readonly InputAction m_Menu_Menu;
     public struct MenuActions
     {
         private @InputManager m_Wrapper;
@@ -912,6 +945,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         public InputAction @Accept => m_Wrapper.m_Menu_Accept;
         public InputAction @Back => m_Wrapper.m_Menu_Back;
         public InputAction @Navigate => m_Wrapper.m_Menu_Navigate;
+        public InputAction @Menu => m_Wrapper.m_Menu_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -930,6 +964,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Navigate.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNavigate;
+                @Menu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenu;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -943,6 +980,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
         }
     }
@@ -983,5 +1023,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnAccept(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

@@ -26,18 +26,29 @@ public class Players{
 public static class FileUser{
     public static Players _highscoreRaw = new Players();
     private static readonly string _path = Application.dataPath + "/Resources/score.json";
-    private static string _file;
+    private static readonly string _path2 = Application.dataPath + "/Resources/score2.json";
 
-    public static void Init(){
-        if (File.Exists (_path)){
-            _file = File.ReadAllText(_path);
+    public static string Init(int opcion){ //TODO: Rehacer correctamente para sistema de varios mundos
+        string result = "";
+        switch(opcion){
+            case 1:
+                if (File.Exists (_path)){
+                    result =  File.ReadAllText(_path);
+                }
+                break;
+            case 2:
+                if (File.Exists (_path2)){
+                    result =  File.ReadAllText(_path2);
+                }
+                break;
         }
+        return result;
     }
-    public static List<Entry> Load(){
-        Init();
+    public static List<Entry> Load(int page){
+        string file = Init(page);
         List<Entry> list = new List<Entry>();
-        if (_file != null){
-            _highscoreRaw = JsonUtility.FromJson<Players>(_file);
+        if (file != null){
+            _highscoreRaw = JsonUtility.FromJson<Players>(file);
             foreach (Entry e in _highscoreRaw.players){
                 list.Add(e);
             }
@@ -49,16 +60,20 @@ public static class FileUser{
         return p1.score.CompareTo(p2.score);
     }
 
-    public static void Save(string time, string name){
-        List<Entry> highscoreEntryList = Load();
+    public static void Save(string time, string name, int scene){
+        List<Entry> highscoreEntryList = Load(scene);
         Entry newEntry = new Entry(name.ToUpper(), time);
 
         highscoreEntryList.Add(newEntry);
+        highscoreEntryList.Sort(SortByScore);
         if(highscoreEntryList.Count > 8){
             highscoreEntryList.RemoveAt(highscoreEntryList.Count - 1);
         }
         _highscoreRaw = new Players(highscoreEntryList);
-        // Debug.Log(JsonUtility.ToJson(_highscoreRaw));
-        File.WriteAllText(_path, JsonUtility.ToJson(_highscoreRaw));
+        Debug.Log(JsonUtility.ToJson(_highscoreRaw));
+        if(scene == 2)
+            File.WriteAllText(_path2, JsonUtility.ToJson(_highscoreRaw));
+        else
+            File.WriteAllText(_path, JsonUtility.ToJson(_highscoreRaw));
     }
 }

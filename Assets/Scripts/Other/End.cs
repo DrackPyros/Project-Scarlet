@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class End : MonoBehaviour{
     private GameObject _cronometer, _player, _ui;
@@ -30,6 +31,7 @@ public class End : MonoBehaviour{
         _saveScreen.transform.Find("InitialsTxt").GetComponent<TMPro.TMP_InputField>().ActivateInputField();
     }
     public void WriteInFile(string name){ //TODO: Input mal alineado
-        FileUser.Save(_recordTime, name);
+        // print(name);
+        FileUser.Save(_recordTime, name, SceneManager.GetActiveScene().buildIndex);
     }
 }
