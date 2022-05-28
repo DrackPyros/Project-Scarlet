@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour{
     private const int _runSpeed = 550;
     private const int _walkSpeed = 400;
     public const int _jumpForce = 400;
+    public float _raycastDistance = 0.001f;
     private int _speedUnitFrames = 0;
     public bool _onwalljump = false;
     public int _direction = 0;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Update(){
         Ongroud();
+        Onwall();
     }
     public void Accelerate(int _direction){ //TODO: Acelerar despues de caer es muy lento
         if (rb.velocity.x < 15 && rb.velocity.x > -15){
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
-        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime, ForceMode.Impulse); 
+        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime* 60, ForceMode.Impulse); 
     }
     public void Jump(){
         if (Ongroud()){
@@ -70,7 +72,7 @@ public class PlayerMovement : MonoBehaviour{
     public void Rotate(int dir){
         if (_direction != dir){
             if (_direction != 0){
-                transform.Rotate(180, 0, 0, Space.Self);
+                transform.Rotate(0, 180, 0, Space.Self);
                 _direction = -_direction;
             }
             else
@@ -84,17 +86,18 @@ public class PlayerMovement : MonoBehaviour{
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
     bool Ongroud(){
-        if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, 0.5f) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
+        if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, _raycastDistance) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
             _onwalljump = false;
-            // Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, 0.5f);
-            // Debug.DrawLine(transform.position - (Vector3.right / 2), Vector3.down, Color.red, 0.5f);
+            Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, _raycastDistance);
+            Debug.DrawLine(transform.position - (Vector3.right / 2), Vector3.down, Color.red, _raycastDistance);
             return true;
         }
         else
             return false;
     }
     bool Onwall(){
-        if (Physics.Raycast(transform.position, transform.right * _direction, 0.5f) && !Ongroud())
+            Debug.DrawLine(transform.position + Vector3.up, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z), Color.blue, _raycastDistance);
+        if (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z),  _raycastDistance) && !Ongroud())
             return true;
         else
             return false;

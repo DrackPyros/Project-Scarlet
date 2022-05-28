@@ -70,7 +70,7 @@ public static class FileUser{
             highscoreEntryList.RemoveAt(highscoreEntryList.Count - 1);
         }
         _highscoreRaw = new Players(highscoreEntryList);
-        Debug.Log(JsonUtility.ToJson(_highscoreRaw));
+        // Debug.Log(JsonUtility.ToJson(_highscoreRaw));
         if(scene == 2)
             File.WriteAllText(_path2, JsonUtility.ToJson(_highscoreRaw));
         else

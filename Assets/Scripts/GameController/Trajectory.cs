@@ -25,7 +25,7 @@ public class Trajectory : MonoBehaviour{
         }
     }
     public void SimulateTraectory(Vector3 pos){ // closer trayectory start
-        var ghostObj = Instantiate(_coinPrefab, pos, Quaternion.identity);
+        var ghostObj = Instantiate(_coinPrefab, (pos + Vector3.up), Quaternion.identity);
         ghostObj.tag = "Untagged";
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
         ghostObj.GetComponent<CoinThrow>().Ignite();
