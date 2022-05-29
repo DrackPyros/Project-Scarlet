@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour{
     private Rigidbody rb;
+    private Animator _animator;
     private const int _runDelayFrames = 30;
     private const int _fallMultiplayer = 3;
     private const int _brakeDelay = 20;
     private const int _runSpeed = 550;
     private const int _walkSpeed = 400;
     public const int _jumpForce = 400;
-    public float _raycastDistance = 0.001f;
+    private float _raycastDistance = 0.01f;
     private int _speedUnitFrames = 0;
     public bool _onwalljump = false;
     public int _direction = 0;
     
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+
     }
     void Update(){
         Ongroud();
@@ -40,6 +43,8 @@ public class PlayerMovement : MonoBehaviour{
     }
     public void Decelerate(){
         if (Ongroud()){
+            try{_animator.SetBool("move", false);}
+            catch{}
             if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
             if (_speedUnitFrames > 0){
                 _speedUnitFrames--;
@@ -53,9 +58,9 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
-        rb.AddForce(Vector3.right * _direction * speed * Time.deltaTime* 60, ForceMode.Impulse); 
+        rb.AddForce((Vector3.right * _direction * speed * Time.deltaTime) * 30, ForceMode.Impulse); 
     }
-    public void Jump(){
+    public void Jump(){ //TODO: revisar movimiento aereo + animaciones
         if (Ongroud()){
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
@@ -86,18 +91,19 @@ public class PlayerMovement : MonoBehaviour{
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
     bool Ongroud(){
-        if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, _raycastDistance) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, 0.5f)){ // Retrasar un poco
+        if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, _raycastDistance) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, _raycastDistance)){ // Retrasar un poco
             _onwalljump = false;
-            Debug.DrawLine(transform.position + (Vector3.right / 2), Vector3.down, Color.green, _raycastDistance);
-            Debug.DrawLine(transform.position - (Vector3.right / 2), Vector3.down, Color.red, _raycastDistance);
+            // Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
+            // Debug.DrawLine(transform.position - (Vector3.right / 6), Vector3.down+ transform.position- (Vector3.right / 6), Color.red, _raycastDistance);
             return true;
         }
         else
             return false;
     }
     bool Onwall(){
-            Debug.DrawLine(transform.position + Vector3.up, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z), Color.blue, _raycastDistance);
-        if (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z),  _raycastDistance) && !Ongroud())
+            // Debug.DrawLine(transform.position + Vector3.up, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z), Color.blue, _raycastDistance);
+        if (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z),  0.2f) && !Ongroud())
+            // {print(true);
             return true;
         else
             return false;

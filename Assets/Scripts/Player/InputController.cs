@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour{
     private InputManager _controls;
+    private Animator _animator;
+
     private GameObject _player, _gameController;
     public GameObject _menu;
     private Vector2 _value;
@@ -15,6 +17,7 @@ public class InputController : MonoBehaviour{
         _controls = new InputManager();
         _player = GameObject.Find("Player");
         _gameController = GameObject.Find("GameController");
+        _animator = GetComponent<Animator>();
 
         _controls.InGame.Time.performed += _ => TimeSlow();
         _controls.InGame.Time.canceled += _ => StopSlow();
@@ -22,7 +25,10 @@ public class InputController : MonoBehaviour{
         _controls.InGame.Jump.performed += _ => _player.GetComponent<PlayerMovement>().Jump();
 
         _controls.InGame.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        _controls.InGame.Move.canceled += _ => {_x = 0; _y = 0;};
+        _controls.InGame.Move.canceled += _ => {
+            _x = 0; 
+            _y = 0;
+        };
 
         _controls.InGame.CoinSelector.performed += contx => Select(contx.ReadValue<float>());
 
@@ -57,6 +63,8 @@ public class InputController : MonoBehaviour{
     private void OnEnable(){_controls.Enable();}
     private void OnDisable(){_controls.Disable();}
     void Move(Vector2 aux){
+        try{_animator.SetBool("move", true);}
+        catch{}
         if(!_shootmode){
             _value = aux;
             int val = (int)Mathf.Round(aux.x);
