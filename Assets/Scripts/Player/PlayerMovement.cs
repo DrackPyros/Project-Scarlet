@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour{
     private int _speedUnitFrames = 0;
     public bool _onwalljump = false;
     public int _direction = 0;
+    // public bool jump;
     
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
@@ -43,13 +44,13 @@ public class PlayerMovement : MonoBehaviour{
     }
     public void Decelerate(){
         if (Ongroud()){
-            try{_animator.SetBool("move", false);}
-            catch{}
             if (_speedUnitFrames == (_runDelayFrames + 1)) _speedUnitFrames = _brakeDelay;
             if (_speedUnitFrames > 0){
                 _speedUnitFrames--;
             }
             else{
+                try{_animator.SetBool("move", false);}
+                catch{}
                 Vector3 eraseX = rb.velocity;
                 eraseX.x = 0;
                 rb.velocity = eraseX;
@@ -58,11 +59,15 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
-        rb.AddForce((Vector3.right * _direction * speed * Time.deltaTime) * 30, ForceMode.Impulse); 
+        rb.AddForce((Vector3.right * _direction * speed * (Time.deltaTime * 15)), ForceMode.Impulse); 
     }
     public void Jump(){ //TODO: revisar movimiento aereo + animaciones
         if (Ongroud()){
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            try{
+                _animator.SetBool("OnGround", false);
+                _animator.SetBool("move", false);}
+            catch{}
         }
         else if (Onwall()) Walljump();
     }
@@ -70,8 +75,11 @@ public class PlayerMovement : MonoBehaviour{
         rb.AddForce(Vector3.up * (Physics.gravity.y * _fallMultiplayer), ForceMode.Force);
     }
     void Walljump(){ // TODO: Bug colisiones y mantener momento
+        rb.velocity = Vector3.zero;
         rb.AddForce((_walkSpeed * -_direction)* 1.5f, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
+        try{_animator.SetBool("OnWallJump", true);}
+        catch{}
         Rotate(-_direction);
     }
     public void Rotate(int dir){
@@ -91,10 +99,12 @@ public class PlayerMovement : MonoBehaviour{
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
     bool Ongroud(){
+        Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
+        Debug.DrawLine(transform.position - (Vector3.right / 6), Vector3.down+ transform.position- (Vector3.right / 6), Color.red, _raycastDistance);
         if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, _raycastDistance) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, _raycastDistance)){ // Retrasar un poco
             _onwalljump = false;
-            // Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
-            // Debug.DrawLine(transform.position - (Vector3.right / 6), Vector3.down+ transform.position- (Vector3.right / 6), Color.red, _raycastDistance);
+            try{_animator.SetBool("OnGround", true);}
+            catch{}
             return true;
         }
         else
