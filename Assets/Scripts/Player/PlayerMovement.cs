@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Walljump(){ // TODO: Bug colisiones y mantener momento
         rb.velocity = Vector3.zero;
-        rb.AddForce((_walkSpeed * -_direction)* 1.5f, _jumpForce, 0, ForceMode.Impulse);
+        rb.AddForce((_walkSpeed * -_direction)* 1.2f, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
         try{_animator.SetBool("OnWallJump", true);}
         catch{}
