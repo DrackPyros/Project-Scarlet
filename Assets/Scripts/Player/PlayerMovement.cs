@@ -13,7 +13,12 @@ public class PlayerMovement : MonoBehaviour{
     private int _speedUnitFrames = 0;
     public bool _onwalljump = false;
     public int _direction = 0;
-    // public bool jump;
+    _JumpAnimation _jumpState = _JumpAnimation.Suelo;
+    enum _JumpAnimation{
+        Suelo,
+        Saltar,
+        Aire
+    }
     
     void Start(){
         rb = gameObject.GetComponent<Rigidbody>();
@@ -66,8 +71,10 @@ public class PlayerMovement : MonoBehaviour{
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             try{
                 _animator.SetBool("OnGround", false);
-                _animator.SetBool("move", false);}
+                _animator.SetBool("move", false);
+                _animator.SetBool("OnWallJump", false);}
             catch{}
+            _jumpState = _JumpAnimation.Saltar;
         }
         else if (Onwall()) Walljump();
     }
@@ -78,7 +85,10 @@ public class PlayerMovement : MonoBehaviour{
         rb.velocity = Vector3.zero;
         rb.AddForce((_walkSpeed * -_direction)* 1.2f, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
-        try{_animator.SetBool("OnWallJump", true);}
+        try{
+            _animator.SetBool("OnWallJump", false);
+            _animator.SetBool("OnWallJump", true);
+            _animator.SetBool("move", false);}
         catch{}
         Rotate(-_direction);
     }
@@ -99,15 +109,21 @@ public class PlayerMovement : MonoBehaviour{
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
     bool Ongroud(){
-        Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
-        Debug.DrawLine(transform.position - (Vector3.right / 6), Vector3.down+ transform.position- (Vector3.right / 6), Color.red, _raycastDistance);
+        // Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
+        // Debug.DrawLine(transform.position - (Vector3.right / 6), Vector3.down+ transform.position- (Vector3.right / 6), Color.red, _raycastDistance);
         if (Physics.Raycast(transform.position + (Vector3.right / 2), Vector3.down, _raycastDistance) || Physics.Raycast(transform.position - (Vector3.right / 2), Vector3.down, _raycastDistance)){ // Retrasar un poco
             _onwalljump = false;
-            try{_animator.SetBool("OnGround", true);}
-            catch{}
+            if (_jumpState == _JumpAnimation.Aire){
+                try{_animator.SetBool("OnGround", true);}
+                catch{}
+                _jumpState = _JumpAnimation.Suelo;
+            }
             return true;
         }
         else
+            if (_jumpState == _JumpAnimation.Saltar){
+                _jumpState = _JumpAnimation.Aire;
+            }
             return false;
     }
     bool Onwall(){
