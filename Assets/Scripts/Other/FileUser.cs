@@ -59,7 +59,6 @@ public static class FileUser{
     static int SortByScore(Entry p1, Entry p2){
         return p1.score.CompareTo(p2.score);
     }
-
     public static void Save(string time, string name, int scene){
         List<Entry> highscoreEntryList = Load(scene);
         Entry newEntry = new Entry(name.ToUpper(), time);

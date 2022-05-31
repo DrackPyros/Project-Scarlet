@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 public class InputController : MonoBehaviour{
     private InputManager _controls;
     private Animator _animator;
-
     private GameObject _player, _gameController;
     public GameObject _menu;
     private Vector2 _value;
