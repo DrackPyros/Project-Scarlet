@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour{
 
     }
     void Update(){
+        // if(_animator.GetBool("OnWallJump") == true)
+        //     _animator.SetBool("OnWallJump", false);
         Ongroud();
         Onwall();
     }
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
-        rb.AddForce((Vector3.right * _direction * speed * (Time.deltaTime * 15)), ForceMode.Impulse); 
+        rb.AddForce((Vector3.right * _direction * speed * (Time.deltaTime * 10)), ForceMode.Impulse); 
     }
     public void Jump(){ //TODO: revisar movimiento aereo + animaciones
         if (Ongroud()){
@@ -86,7 +88,6 @@ public class PlayerMovement : MonoBehaviour{
         rb.AddForce((_walkSpeed * -_direction)* 1.2f, _jumpForce, 0, ForceMode.Impulse);
         _onwalljump = true;
         try{
-            _animator.SetBool("OnWallJump", false);
             _animator.SetBool("OnWallJump", true);
             _animator.SetBool("move", false);}
         catch{}

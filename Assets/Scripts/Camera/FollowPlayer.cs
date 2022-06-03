@@ -10,6 +10,7 @@ public class FollowPlayer : MonoBehaviour{
         _startPosition = transform.position;
         _player = GameObject.Find("Player");
         _offset = new Vector3(0, 4, -10);
+        Debug.Log("Screen Width : " + Screen.height); //TODO: comprobar resolución del proyector y hacer un media query
     }
     void LateUpdate(){
         if(_player.transform.position.x >= (Vector3.right.x*10)){

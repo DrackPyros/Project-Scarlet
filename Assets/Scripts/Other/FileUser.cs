@@ -25,11 +25,12 @@ public class Players{
 }
 public static class FileUser{
     public static Players _highscoreRaw = new Players();
-    private static readonly string _path = Application.dataPath + "/Resources/score.json";
-    private static readonly string _path2 = Application.dataPath + "/Resources/score2.json";
+    private static readonly string _path = Path.Combine(Application.streamingAssetsPath, "score.json");
+    private static readonly string _path2 = Path.Combine(Application.streamingAssetsPath, "score2.json");
 
     public static string Init(int opcion){ //TODO: Rehacer correctamente para sistema de varios mundos
         string result = "";
+        Debug.Log(_path);
         switch(opcion){
             case 1:
                 if (File.Exists (_path)){
