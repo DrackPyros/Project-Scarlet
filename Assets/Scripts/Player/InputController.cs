@@ -62,14 +62,16 @@ public class InputController : MonoBehaviour{
     private void OnEnable(){_controls.Enable();}
     private void OnDisable(){_controls.Disable();}
     void Move(Vector2 aux){
-        try{_animator.SetBool("move", true);}
-        catch{}
         if(!_shootmode){
-            _value = aux;
-            int val = (int)Mathf.Round(aux.x);
-            if (!_player.GetComponent<PlayerMovement>().GetOnWalljump()){
-                _player.GetComponent<PlayerMovement>().Accelerate(val);
-                _player.GetComponent<PlayerMovement>().Rotate(val);
+            if (_player.GetComponent<PlayerMovement>().GetStop() == false){
+                try{_animator.SetBool("move", true);}
+                catch{}
+                _value = aux;
+                int val = (int)Mathf.Round(aux.x);
+                if (!_player.GetComponent<PlayerMovement>().GetOnWalljump()){
+                    _player.GetComponent<PlayerMovement>().Accelerate(val);
+                    _player.GetComponent<PlayerMovement>().Rotate(val);
+                }
             }
         } else { 
             _x = aux.x;
@@ -126,7 +128,7 @@ public class InputController : MonoBehaviour{
             _controls.InGame.Enable();
         }
     }
-    void BackButton(){
+    void BackButton(){ //TODO: Hacer BackButton
         // transform.Find("BackButton").GetComponent<Button>().Invoke();
     }
     public float getX(){ return _x; }

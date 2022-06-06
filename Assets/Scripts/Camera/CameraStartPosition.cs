@@ -22,7 +22,7 @@ public class CameraStartPosition : MonoBehaviour{
         _startPosition = transform.position;
     }
     void Update(){
-        // Debug.Log("Aspect Ratio : " + gameObject.GetComponent<Camera>().aspect); //TODO: comprobar resolución del proyector y hacer un media query
+        // Debug.Log("Aspect Ratio : " + gameObject.GetComponent<Camera>().aspect);
     }
     public void ResetCamera(){
         transform.position = _startPosition;

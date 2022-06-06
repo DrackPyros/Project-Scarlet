@@ -30,7 +30,7 @@ public static class FileUser{
 
     public static string Init(int opcion){ //TODO: Rehacer correctamente para sistema de varios mundos
         string result = "";
-        Debug.Log(_path);
+        // Debug.Log(_path);
         switch(opcion){
             case 1:
                 if (File.Exists (_path)){

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour{
     public const int _jumpForce = 400;
     private float _raycastDistance = 0.01f;
     private int _speedUnitFrames = 0;
+    private bool _stop = false;
     public bool _onwalljump = false;
     public int _direction = 0;
     _JumpAnimation _jumpState = _JumpAnimation.Suelo;
@@ -107,7 +108,13 @@ public class PlayerMovement : MonoBehaviour{
     }
     public void Stop(){
         rb.velocity = Vector3.zero;
-        rb.constraints = RigidbodyConstraints.FreezePosition;
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        try{
+            _animator.SetBool("OnGround", true);
+            _animator.SetBool("move", false);
+            _animator.SetBool("OnWallJump", false);}
+        catch{}
+        _stop = true;
     }
     bool Ongroud(){
         // Debug.DrawLine(transform.position + (Vector3.right / 6), Vector3.down+ transform.position+ (Vector3.right / 6), Color.green, _raycastDistance);
@@ -138,4 +145,5 @@ public class PlayerMovement : MonoBehaviour{
     public bool GetOnWalljump() {return _onwalljump;}
     public int GetSpeedUnitFrames() {return _speedUnitFrames;}
     public int GetRunDelayFrames() {return _runDelayFrames;}
+    public bool GetStop() {return _stop;}
 }

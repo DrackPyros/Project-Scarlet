@@ -45,7 +45,7 @@ public class RankingView : MonoBehaviour{
     }
     void DeleteContent(){
         GameObject[] transformList = GameObject.FindGameObjectsWithTag("Template");
-        for(int i = 1; i < transformList.Length; i++){
+        for(int i = 0; i < transformList.Length; i++){
             Destroy(transformList[i]);
         }
     }
