@@ -10,7 +10,7 @@ public class RankingView : MonoBehaviour{
     private List<Entry> _highscoreEntryList;
     
     
-    void Start(){ //TODO: Cambiar entre hojas de ranking
+    void Start(){
         ChangePage(1);
     }
     void OnEnable(){

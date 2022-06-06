@@ -22,6 +22,7 @@ public class LevelSelectorMenu : MonoBehaviour{
     private List<Transform> _levelTrasnformList;
     private List<Level> _levelList;
     private bool _selected = false;
+    public List<Texture2D> imgList; //Añadir textura en el inspector
     
     
     void Start(){ 
@@ -61,8 +62,8 @@ public class LevelSelectorMenu : MonoBehaviour{
     public List<Level> LoadLevelList(){
         List<Level> list = new List<Level>();
         Sprite img = null;
-        // List<Sprite> imgList = new List<Image>(); // TODO: Crear e indexar imagenes
         for(int i = 1; i < SceneManager.sceneCountInBuildSettings; i++){
+            img = Sprite.Create(imgList[i-1], new Rect(0, 0, imgList[i-1].width, imgList[i-1].height), new Vector2(0.5f, 0.5f));
             string title = SceneUtility.GetScenePathByBuildIndex(i);
             title = title.Substring(14, 6);
             Level aux = new Level(title, img, i);
