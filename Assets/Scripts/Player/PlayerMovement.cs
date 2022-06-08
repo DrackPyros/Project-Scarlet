@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour{
             }
             if (Ongroud()){
                 if (_speedUnitFrames <= _runDelayFrames){
-                    Move(_walkSpeed, _direction);
+                    Move(_runSpeed, _direction);
                     _speedUnitFrames++;
                 }
                 else
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     void Move(int speed, int _direction){
         // print(Vector3.right * _direction * speed * Time.deltaTime); //TODO: El movimiento en camara lenta no funciona -> poca fuerza por Time.deltatime
-        rb.AddForce((Vector3.right * _direction * speed * (Time.deltaTime * 10)), ForceMode.Impulse); 
+        rb.AddForce((Vector3.right * _direction * speed * (Time.deltaTime * 2.5f)), ForceMode.Impulse); 
     }
     public void Jump(){ //TODO: revisar movimiento aereo + animaciones
         if (Ongroud()){
@@ -135,8 +135,10 @@ public class PlayerMovement : MonoBehaviour{
             return false;
     }
     bool Onwall(){
-            // Debug.DrawLine(transform.position + Vector3.up, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z), Color.blue, _raycastDistance);
-        if (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z),  0.2f) && !Ongroud())
+        // Debug.DrawLine(transform.position + Vector3.up, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z), Color.blue, _raycastDistance);
+        if ((Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1, transform.position.z),  0.2f) && !Ongroud())||
+            (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 1.5f, transform.position.z),  0.2f) && !Ongroud())||
+            (Physics.Raycast(transform.position, new Vector3((transform.position.x + 1)* _direction, transform.position.y + 2, transform.position.z),  0.2f) && !Ongroud()))
             // {print(true);
             return true;
         else
