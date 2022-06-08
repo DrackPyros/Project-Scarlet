@@ -26,8 +26,8 @@ public class Magnetism : MonoBehaviour{
             float efectArea = Vector3.Distance(_player.transform.position, _coin.transform.position);
             if (efectArea <= 20){
                 if(_coin.GetComponent<CoinAnimation>().Ongroud()){ // Si la moneda toca el suelo, la pelota tiene que obtener impulso como si fuera la moneda
-                    _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime, ForceMode.Impulse);
-                    print(((_coin.transform.position - _player.transform.position)* (force))* _frame * Time.deltaTime); // La fuerza multiplicada por la division da un resultado menor
+                    _player.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* (force * (_playerRb.mass / _coinRb.mass)))* _frame * Time.deltaTime * 1000, ForceMode.Force);
+                    // print(((_coin.transform.position - _player.transform.position)* (force))* _frame * Time.deltaTime); // La fuerza multiplicada por la division da un resultado menor
                 } else{
                     _player.GetComponent<Rigidbody>().AddForce(((_player.transform.position - _coin.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
                     _coin.GetComponent<Rigidbody>().AddForce(((_coin.transform.position - _player.transform.position)* force)* _frame * Time.deltaTime, ForceMode.Impulse);
